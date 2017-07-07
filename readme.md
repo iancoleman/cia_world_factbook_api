@@ -4,7 +4,7 @@ Converts the [CIA World Factbook](https://www.cia.gov/library/publications/the-w
 
 ## Data
 
-* [Latest](https://www.github.com/iancoleman/cia_world_factbook_api/master/data) - approx 3 MB
+* [Latest](https://www.github.com/iancoleman/cia_world_factbook_api/tree/master/data) - approx 3 MB
 * [Historical](#TODO) - approx 30 MB
 * [Html Archives](#TODO) - approx 240 MB
 
