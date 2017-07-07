@@ -1,0 +1,7 @@
+{
+    "country_html_root": "/path/to/country_html/pages",
+    "country_html_blacklist": "/path/to/country_html/blacklist",
+    "country_html_yearly_summaries": "/path/to/country_html/yearly_summaries",
+    "country_json_root": "/path/to/country_json",
+    "weekly_json_root": "/path/to/weekly_json"
+}

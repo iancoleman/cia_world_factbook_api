@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Exploring the CIA World Factbook API</title>
+    <link rel="stylesheet" href="../index.css">
+</head>
+
+<body>
+
+<p>
+Global Ranking of
+Physician Density
+from the CIA World Factbook.
+</p>
+
+<table>
+  <tr>
+    <th>Rank</th>
+    <th>Country</th>
+    <th>Physicians per 1000 population</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219181905/https://www.cia.gov/library/publications/the-world-factbook/geos/qa.html">
+        Qatar
+      </a>
+    </td>
+    <td>7.74</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219093656/https://www.cia.gov/library/publications/the-world-factbook/geos/mn.html">
+        Monaco
+      </a>
+    </td>
+    <td>7.17</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218084604/https://www.cia.gov/library/publications/the-world-factbook/geos/cu.html">
+        Cuba
+      </a>
+    </td>
+    <td>6.72</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219191300/https://www.cia.gov/library/publications/the-world-factbook/geos/sm.html">
+        San Marino
+      </a>
+    </td>
+    <td>5.1</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215081333/https://www.cia.gov/library/publications/the-world-factbook/geos/sp.html">
+        Spain
+      </a>
+    </td>
+    <td>4.95</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217160229/https://www.cia.gov/library/publications/the-world-factbook/geos/au.html">
+        Austria
+      </a>
+    </td>
+    <td>4.83</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219053627/https://www.cia.gov/library/publications/the-world-factbook/geos/rs.html">
+        Russia
+      </a>
+    </td>
+    <td>4.31</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219125217/https://www.cia.gov/library/publications/the-world-factbook/geos/no.html">
+        Norway
+      </a>
+    </td>
+    <td>4.28</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218183652/https://www.cia.gov/library/publications/the-world-factbook/geos/gg.html">
+        Georgia
+      </a>
+    </td>
+    <td>4.27</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219052640/https://www.cia.gov/library/publications/the-world-factbook/geos/lh.html">
+        Lithuania
+      </a>
+    </td>
+    <td>4.12</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>
+      <a href="https://web.archive.org/web/20161214182337/https://www.cia.gov/library/publications/the-world-factbook/geos/po.html">
+        Portugal
+      </a>
+    </td>
+    <td>4.1</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219230457/https://www.cia.gov/library/publications/the-world-factbook/geos/sz.html">
+        Switzerland
+      </a>
+    </td>
+    <td>4.05</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>
+      <a href="https://web.archive.org/web/20170101032205/https://www.cia.gov/library/publications/the-world-factbook/geos/an.html">
+        Andorra
+      </a>
+    </td>
+    <td>4</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217200407/https://www.cia.gov/library/publications/the-world-factbook/geos/bo.html">
+        Belarus
+      </a>
+    </td>
+    <td>3.93</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219225152/https://www.cia.gov/library/publications/the-world-factbook/geos/sw.html">
+        Sweden
+      </a>
+    </td>
+    <td>3.93</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>
+      <a href="https://web.archive.org/web/20161216180747/https://www.cia.gov/library/publications/the-world-factbook/geos/gm.html">
+        Germany
+      </a>
+    </td>
+    <td>3.89</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218000605/https://www.cia.gov/library/publications/the-world-factbook/geos/bu.html">
+        Bulgaria
+      </a>
+    </td>
+    <td>3.87</td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217153810/https://www.cia.gov/library/publications/the-world-factbook/geos/ar.html">
+        Argentina
+      </a>
+    </td>
+    <td>3.86</td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215192155/https://www.cia.gov/library/publications/the-world-factbook/geos/be.html">
+        Belgium
+      </a>
+    </td>
+    <td>3.78</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215160917/https://www.cia.gov/library/publications/the-world-factbook/geos/it.html">
+        Italy
+      </a>
+    </td>
+    <td>3.76</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>
+      <a href="https://web.archive.org/web/20161214142311/https://www.cia.gov/library/publications/the-world-factbook/geos/uy.html">
+        Uruguay
+      </a>
+    </td>
+    <td>3.74</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218092020/https://www.cia.gov/library/publications/the-world-factbook/geos/ez.html">
+        Czechia
+      </a>
+    </td>
+    <td>3.71</td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219020447/https://www.cia.gov/library/publications/the-world-factbook/geos/kz.html">
+        Kazakhstan
+      </a>
+    </td>
+    <td>3.62</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219040547/https://www.cia.gov/library/publications/the-world-factbook/geos/lg.html">
+        Latvia
+      </a>
+    </td>
+    <td>3.58</td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>
+      <a href="https://web.archive.org/web/20161204055818/https://www.cia.gov/library/publications/the-world-factbook/geos/up.html">
+        Ukraine
+      </a>
+    </td>
+    <td>3.54</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219074326/https://www.cia.gov/library/publications/the-world-factbook/geos/mt.html">
+        Malta
+      </a>
+    </td>
+    <td>3.49</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218102721/https://www.cia.gov/library/publications/the-world-factbook/geos/da.html">
+        Denmark
+      </a>
+    </td>
+    <td>3.49</td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218233357/https://www.cia.gov/library/publications/the-world-factbook/geos/ic.html">
+        Iceland
+      </a>
+    </td>
+    <td>3.48</td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219071350/https://www.cia.gov/library/publications/the-world-factbook/geos/aj.html">
+        Azerbaijan
+      </a>
+    </td>
+    <td>3.4</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>
+      <a href="https://web.archive.org/web/20161216082949/https://www.cia.gov/library/publications/the-world-factbook/geos/is.html">
+        Israel
+      </a>
+    </td>
+    <td>3.34</td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td>
+      <a href="https://web.archive.org/web/20170101000509/https://www.cia.gov/library/publications/the-world-factbook/geos/lo.html">
+        Slovakia
+      </a>
+    </td>
+    <td>3.32</td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215124155/https://www.cia.gov/library/publications/the-world-factbook/geos/as.html">
+        Australia
+      </a>
+    </td>
+    <td>3.27</td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218133937/https://www.cia.gov/library/publications/the-world-factbook/geos/en.html">
+        Estonia
+      </a>
+    </td>
+    <td>3.24</td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219041138/https://www.cia.gov/library/publications/the-world-factbook/geos/le.html">
+        Lebanon
+      </a>
+    </td>
+    <td>3.2</td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td>
+      <a href="https://web.archive.org/web/20161216101402/https://www.cia.gov/library/publications/the-world-factbook/geos/fr.html">
+        France
+      </a>
+    </td>
+    <td>3.19</td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218225857/https://www.cia.gov/library/publications/the-world-factbook/geos/hu.html">
+        Hungary
+      </a>
+    </td>
+    <td>3.1</td>
+  </tr>
+  <tr>
+    <td>37</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219124825/https://www.cia.gov/library/publications/the-world-factbook/geos/ne.html">
+        Niue
+      </a>
+    </td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>38</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219091940/https://www.cia.gov/library/publications/the-world-factbook/geos/md.html">
+        Moldova
+      </a>
+    </td>
+    <td>2.98</td>
+  </tr>
+  <tr>
+    <td>39</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218144535/https://www.cia.gov/library/publications/the-world-factbook/geos/fi.html">
+        Finland
+      </a>
+    </td>
+    <td>2.91</td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219052835/https://www.cia.gov/library/publications/the-world-factbook/geos/lu.html">
+        Luxembourg
+      </a>
+    </td>
+    <td>2.9</td>
+  </tr>
+  <tr>
+    <td>41</td>
+    <td>
+      <a href="https://web.archive.org/web/20170101002109/https://www.cia.gov/library/publications/the-world-factbook/geos/hr.html">
+        Croatia
+      </a>
+    </td>
+    <td>2.84</td>
+  </tr>
+  <tr>
+    <td>42</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219093808/https://www.cia.gov/library/publications/the-world-factbook/geos/mg.html">
+        Mongolia
+      </a>
+    </td>
+    <td>2.84</td>
+  </tr>
+  <tr>
+    <td>43</td>
+    <td>
+      <a href="https://web.archive.org/web/20170102110105/https://www.cia.gov/library/publications/the-world-factbook/geos/eg.html">
+        Egypt
+      </a>
+    </td>
+    <td>2.83</td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217184343/https://www.cia.gov/library/publications/the-world-factbook/geos/bf.html">
+        Bahamas, The
+      </a>
+    </td>
+    <td>2.82</td>
+  </tr>
+  <tr>
+    <td>45</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215090139/https://www.cia.gov/library/publications/the-world-factbook/geos/uk.html">
+        United Kingdom
+      </a>
+    </td>
+    <td>2.81</td>
+  </tr>
+  <tr>
+    <td>46</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215143920/https://www.cia.gov/library/publications/the-world-factbook/geos/nz.html">
+        New Zealand
+      </a>
+    </td>
+    <td>2.74</td>
+  </tr>
+  <tr>
+    <td>47</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217154031/https://www.cia.gov/library/publications/the-world-factbook/geos/am.html">
+        Armenia
+      </a>
+    </td>
+    <td>2.7</td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td>
+      <a href="https://web.archive.org/web/20161214175713/https://www.cia.gov/library/publications/the-world-factbook/geos/ei.html">
+        Ireland
+      </a>
+    </td>
+    <td>2.67</td>
+  </tr>
+  <tr>
+    <td>49</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219060038/https://www.cia.gov/library/publications/the-world-factbook/geos/mk.html">
+        Macedonia
+      </a>
+    </td>
+    <td>2.62</td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>
+      <a href="https://web.archive.org/web/20161214143537/https://www.cia.gov/library/publications/the-world-factbook/geos/jo.html">
+        Jordan
+      </a>
+    </td>
+    <td>2.56</td>
+  </tr>
+  <tr>
+    <td>51</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219201536/https://www.cia.gov/library/publications/the-world-factbook/geos/si.html">
+        Slovenia
+      </a>
+    </td>
+    <td>2.54</td>
+  </tr>
+  <tr>
+    <td>52</td>
+    <td>
+      <a href="https://web.archive.org/web/20161124014822/https://www.cia.gov/library/publications/the-world-factbook/geos/uz.html">
+        Uzbekistan
+      </a>
+    </td>
+    <td>2.53</td>
+  </tr>
+  <tr>
+    <td>53</td>
+    <td>
+      <a href="https://web.archive.org/web/20161216101305/https://www.cia.gov/library/publications/the-world-factbook/geos/ae.html">
+        United Arab Emirates
+      </a>
+    </td>
+    <td>2.53</td>
+  </tr>
+  <tr>
+    <td>54</td>
+    <td>
+      <a href="https://web.archive.org/web/20161214220624/https://www.cia.gov/library/publications/the-world-factbook/geos/sa.html">
+        Saudi Arabia
+      </a>
+    </td>
+    <td>2.49</td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218105939/https://www.cia.gov/library/publications/the-world-factbook/geos/us.html">
+        United States
+      </a>
+    </td>
+    <td>2.45</td>
+  </tr>
+  <tr>
+    <td>56</td>
+    <td>
+      <a href="https://web.archive.org/web/20161216170507/https://www.cia.gov/library/publications/the-world-factbook/geos/ro.html">
+        Romania
+      </a>
+    </td>
+    <td>2.45</td>
+  </tr>
+  <tr>
+    <td>57</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219130231/https://www.cia.gov/library/publications/the-world-factbook/geos/mu.html">
+        Oman
+      </a>
+    </td>
+    <td>2.43</td>
+  </tr>
+  <tr>
+    <td>58</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218092005/https://www.cia.gov/library/publications/the-world-factbook/geos/cy.html">
+        Cyprus
+      </a>
+    </td>
+    <td>2.33</td>
+  </tr>
+  <tr>
+    <td>59</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215135856/https://www.cia.gov/library/publications/the-world-factbook/geos/ja.html">
+        Japan
+      </a>
+    </td>
+    <td>2.3</td>
+  </tr>
+  <tr>
+    <td>60</td>
+    <td>
+      <a href="https://web.archive.org/web/20161216170603/https://www.cia.gov/library/publications/the-world-factbook/geos/pl.html">
+        Poland
+      </a>
+    </td>
+    <td>2.22</td>
+  </tr>
+  <tr>
+    <td>61</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215054820/https://www.cia.gov/library/publications/the-world-factbook/geos/ks.html">
+        Korea, South
+      </a>
+    </td>
+    <td>2.14</td>
+  </tr>
+  <tr>
+    <td>62</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219191838/https://www.cia.gov/library/publications/the-world-factbook/geos/ri.html">
+        Serbia
+      </a>
+    </td>
+    <td>2.11</td>
+  </tr>
+  <tr>
+    <td>63</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219100840/https://www.cia.gov/library/publications/the-world-factbook/geos/mj.html">
+        Montenegro
+      </a>
+    </td>
+    <td>2.11</td>
+  </tr>
+  <tr>
+    <td>64</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219081618/https://www.cia.gov/library/publications/the-world-factbook/geos/mx.html">
+        Mexico
+      </a>
+    </td>
+    <td>2.1</td>
+  </tr>
+  <tr>
+    <td>65</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218180037/https://www.cia.gov/library/publications/the-world-factbook/geos/gz.html">
+        Gaza Strip
+      </a>
+    </td>
+    <td>2.1</td>
+  </tr>
+  <tr>
+    <td>66</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218022203/https://www.cia.gov/library/publications/the-world-factbook/geos/ca.html">
+        Canada
+      </a>
+    </td>
+    <td>2.07</td>
+  </tr>
+  <tr>
+    <td>67</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219040354/https://www.cia.gov/library/publications/the-world-factbook/geos/kg.html">
+        Kyrgyzstan
+      </a>
+    </td>
+    <td>1.97</td>
+  </tr>
+  <tr>
+    <td>68</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215050042/https://www.cia.gov/library/publications/the-world-factbook/geos/sn.html">
+        Singapore
+      </a>
+    </td>
+    <td>1.95</td>
+  </tr>
+  <tr>
+    <td>69</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217215708/https://www.cia.gov/library/publications/the-world-factbook/geos/bk.html">
+        Bosnia And Herzegovina
+      </a>
+    </td>
+    <td>1.93</td>
+  </tr>
+  <tr>
+    <td>70</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219084149/https://www.cia.gov/library/publications/the-world-factbook/geos/ti.html">
+        Tajikistan
+      </a>
+    </td>
+    <td>1.92</td>
+  </tr>
+  <tr>
+    <td>71</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219043846/https://www.cia.gov/library/publications/the-world-factbook/geos/ly.html">
+        Libya
+      </a>
+    </td>
+    <td>1.9</td>
+  </tr>
+  <tr>
+    <td>72</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217232121/https://www.cia.gov/library/publications/the-world-factbook/geos/br.html">
+        Brazil
+      </a>
+    </td>
+    <td>1.89</td>
+  </tr>
+  <tr>
+    <td>73</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217200017/https://www.cia.gov/library/publications/the-world-factbook/geos/bb.html">
+        Barbados
+      </a>
+    </td>
+    <td>1.81</td>
+  </tr>
+  <tr>
+    <td>74</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215080824/https://www.cia.gov/library/publications/the-world-factbook/geos/ku.html">
+        Kuwait
+      </a>
+    </td>
+    <td>1.79</td>
+  </tr>
+  <tr>
+    <td>75</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218113708/https://www.cia.gov/library/publications/the-world-factbook/geos/ec.html">
+        Ecuador
+      </a>
+    </td>
+    <td>1.72</td>
+  </tr>
+  <tr>
+    <td>76</td>
+    <td>
+      <a href="https://web.archive.org/web/20161216094058/https://www.cia.gov/library/publications/the-world-factbook/geos/tu.html">
+        Turkey
+      </a>
+    </td>
+    <td>1.71</td>
+  </tr>
+  <tr>
+    <td>77</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218191658/https://www.cia.gov/library/publications/the-world-factbook/geos/gl.html">
+        Greenland
+      </a>
+    </td>
+    <td>1.67</td>
+  </tr>
+  <tr>
+    <td>78</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219141717/https://www.cia.gov/library/publications/the-world-factbook/geos/pm.html">
+        Panama
+      </a>
+    </td>
+    <td>1.65</td>
+  </tr>
+  <tr>
+    <td>79</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219071905/https://www.cia.gov/library/publications/the-world-factbook/geos/mp.html">
+        Mauritius
+      </a>
+    </td>
+    <td>1.62</td>
+  </tr>
+  <tr>
+    <td>80</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218131026/https://www.cia.gov/library/publications/the-world-factbook/geos/es.html">
+        El Salvador
+      </a>
+    </td>
+    <td>1.6</td>
+  </tr>
+  <tr>
+    <td>81</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218192931/https://www.cia.gov/library/publications/the-world-factbook/geos/ch.html">
+        China
+      </a>
+    </td>
+    <td>1.49</td>
+  </tr>
+  <tr>
+    <td>82</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218113619/https://www.cia.gov/library/publications/the-world-factbook/geos/dr.html">
+        Dominican Republic
+      </a>
+    </td>
+    <td>1.49</td>
+  </tr>
+  <tr>
+    <td>83</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218054316/https://www.cia.gov/library/publications/the-world-factbook/geos/co.html">
+        Colombia
+      </a>
+    </td>
+    <td>1.47</td>
+  </tr>
+  <tr>
+    <td>84</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219192616/https://www.cia.gov/library/publications/the-world-factbook/geos/sy.html">
+        Syria
+      </a>
+    </td>
+    <td>1.46</td>
+  </tr>
+  <tr>
+    <td>85</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215124134/https://www.cia.gov/library/publications/the-world-factbook/geos/bx.html">
+        Brunei
+      </a>
+    </td>
+    <td>1.44</td>
+  </tr>
+  <tr>
+    <td>86</td>
+    <td>
+      <a href="https://web.archive.org/web/20170101190015/https://www.cia.gov/library/publications/the-world-factbook/geos/mv.html">
+        Maldives
+      </a>
+    </td>
+    <td>1.42</td>
+  </tr>
+  <tr>
+    <td>87</td>
+    <td>
+      <a href="https://web.archive.org/web/20161214142234/https://www.cia.gov/library/publications/the-world-factbook/geos/ps.html">
+        Palau
+      </a>
+    </td>
+    <td>1.38</td>
+  </tr>
+  <tr>
+    <td>88</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218064740/https://www.cia.gov/library/publications/the-world-factbook/geos/cw.html">
+        Cook Islands
+      </a>
+    </td>
+    <td>1.33</td>
+  </tr>
+  <tr>
+    <td>89</td>
+    <td>
+      <a href="https://web.archive.org/web/20161124014804/https://www.cia.gov/library/publications/the-world-factbook/geos/we.html">
+        West Bank
+      </a>
+    </td>
+    <td>1.3</td>
+  </tr>
+  <tr>
+    <td>90</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219154902/https://www.cia.gov/library/publications/the-world-factbook/geos/pa.html">
+        Paraguay
+      </a>
+    </td>
+    <td>1.23</td>
+  </tr>
+  <tr>
+    <td>91</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215090026/https://www.cia.gov/library/publications/the-world-factbook/geos/ts.html">
+        Tunisia
+      </a>
+    </td>
+    <td>1.22</td>
+  </tr>
+  <tr>
+    <td>92</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217150059/https://www.cia.gov/library/publications/the-world-factbook/geos/ag.html">
+        Algeria
+      </a>
+    </td>
+    <td>1.21</td>
+  </tr>
+  <tr>
+    <td>93</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215055000/https://www.cia.gov/library/publications/the-world-factbook/geos/my.html">
+        Malaysia
+      </a>
+    </td>
+    <td>1.2</td>
+  </tr>
+  <tr>
+    <td>94</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215091500/https://www.cia.gov/library/publications/the-world-factbook/geos/vm.html">
+        Vietnam
+      </a>
+    </td>
+    <td>1.19</td>
+  </tr>
+  <tr>
+    <td>95</td>
+    <td>
+      <a href="https://web.archive.org/web/20161216134527/https://www.cia.gov/library/publications/the-world-factbook/geos/td.html">
+        Trinidad And Tobago
+      </a>
+    </td>
+    <td>1.18</td>
+  </tr>
+  <tr>
+    <td>96</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217144148/https://www.cia.gov/library/publications/the-world-factbook/geos/al.html">
+        Albania
+      </a>
+    </td>
+    <td>1.15</td>
+  </tr>
+  <tr>
+    <td>97</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219154952/https://www.cia.gov/library/publications/the-world-factbook/geos/pe.html">
+        Peru
+      </a>
+    </td>
+    <td>1.13</td>
+  </tr>
+  <tr>
+    <td>98</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218070103/https://www.cia.gov/library/publications/the-world-factbook/geos/cs.html">
+        Costa Rica
+      </a>
+    </td>
+    <td>1.11</td>
+  </tr>
+  <tr>
+    <td>99</td>
+    <td>
+      <a href="https://web.archive.org/web/20161118041603/https://www.cia.gov/library/publications/the-world-factbook/geos/tv.html">
+        Tuvalu
+      </a>
+    </td>
+    <td>1.09</td>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219191907/https://www.cia.gov/library/publications/the-world-factbook/geos/se.html">
+        Seychelles
+      </a>
+    </td>
+    <td>1.07</td>
+  </tr>
+  <tr>
+    <td>101</td>
+    <td>
+      <a href="https://web.archive.org/web/20161119022645/https://www.cia.gov/library/publications/the-world-factbook/geos/ci.html">
+        Chile
+      </a>
+    </td>
+    <td>1.02</td>
+  </tr>
+  <tr>
+    <td>102</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218200128/https://www.cia.gov/library/publications/the-world-factbook/geos/gt.html">
+        Guatemala
+      </a>
+    </td>
+    <td>0.93</td>
+  </tr>
+  <tr>
+    <td>103</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218184713/https://www.cia.gov/library/publications/the-world-factbook/geos/ba.html">
+        Bahrain
+      </a>
+    </td>
+    <td>0.92</td>
+  </tr>
+  <tr>
+    <td>104</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219120801/https://www.cia.gov/library/publications/the-world-factbook/geos/nu.html">
+        Nicaragua
+      </a>
+    </td>
+    <td>0.9</td>
+  </tr>
+  <tr>
+    <td>105</td>
+    <td>
+      <a href="https://web.archive.org/web/20170101011715/https://www.cia.gov/library/publications/the-world-factbook/geos/ir.html">
+        Iran
+      </a>
+    </td>
+    <td>0.89</td>
+  </tr>
+  <tr>
+    <td>106</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219132422/https://www.cia.gov/library/publications/the-world-factbook/geos/pk.html">
+        Pakistan
+      </a>
+    </td>
+    <td>0.83</td>
+  </tr>
+  <tr>
+    <td>107</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217205017/https://www.cia.gov/library/publications/the-world-factbook/geos/bh.html">
+        Belize
+      </a>
+    </td>
+    <td>0.83</td>
+  </tr>
+  <tr>
+    <td>108</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219205421/https://www.cia.gov/library/publications/the-world-factbook/geos/sf.html">
+        South Africa
+      </a>
+    </td>
+    <td>0.78</td>
+  </tr>
+  <tr>
+    <td>109</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219110712/https://www.cia.gov/library/publications/the-world-factbook/geos/nr.html">
+        Nauru
+      </a>
+    </td>
+    <td>0.71</td>
+  </tr>
+  <tr>
+    <td>110</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215133638/https://www.cia.gov/library/publications/the-world-factbook/geos/in.html">
+        India
+      </a>
+    </td>
+    <td>0.7</td>
+  </tr>
+  <tr>
+    <td>111</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219223426/https://www.cia.gov/library/publications/the-world-factbook/geos/ce.html">
+        Sri Lanka
+      </a>
+    </td>
+    <td>0.68</td>
+  </tr>
+  <tr>
+    <td>112</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218195042/https://www.cia.gov/library/publications/the-world-factbook/geos/gj.html">
+        Grenada
+      </a>
+    </td>
+    <td>0.66</td>
+  </tr>
+  <tr>
+    <td>113</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219101009/https://www.cia.gov/library/publications/the-world-factbook/geos/mo.html">
+        Morocco
+      </a>
+    </td>
+    <td>0.62</td>
+  </tr>
+  <tr>
+    <td>114</td>
+    <td>
+      <a href="https://web.archive.org/web/20161214052431/https://www.cia.gov/library/publications/the-world-factbook/geos/iz.html">
+        Iraq
+      </a>
+    </td>
+    <td>0.61</td>
+  </tr>
+  <tr>
+    <td>115</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215063908/https://www.cia.gov/library/publications/the-world-factbook/geos/bm.html">
+        Burma
+      </a>
+    </td>
+    <td>0.61</td>
+  </tr>
+  <tr>
+    <td>116</td>
+    <td>
+      <a href="https://web.archive.org/web/20161118041602/https://www.cia.gov/library/publications/the-world-factbook/geos/tn.html">
+        Tonga
+      </a>
+    </td>
+    <td>0.56</td>
+  </tr>
+  <tr>
+    <td>117</td>
+    <td>
+      <a href="https://web.archive.org/web/20161216002513/https://www.cia.gov/library/publications/the-world-factbook/geos/bl.html">
+        Bolivia
+      </a>
+    </td>
+    <td>0.47</td>
+  </tr>
+  <tr>
+    <td>118</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219190907/https://www.cia.gov/library/publications/the-world-factbook/geos/ws.html">
+        Samoa
+      </a>
+    </td>
+    <td>0.45</td>
+  </tr>
+  <tr>
+    <td>119</td>
+    <td>
+      <a href="https://web.archive.org/web/20161214140342/https://www.cia.gov/library/publications/the-world-factbook/geos/rm.html">
+        Marshall Islands
+      </a>
+    </td>
+    <td>0.44</td>
+  </tr>
+  <tr>
+    <td>120</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218142423/https://www.cia.gov/library/publications/the-world-factbook/geos/fj.html">
+        Fiji
+      </a>
+    </td>
+    <td>0.43</td>
+  </tr>
+  <tr>
+    <td>121</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219122918/https://www.cia.gov/library/publications/the-world-factbook/geos/ni.html">
+        Nigeria
+      </a>
+    </td>
+    <td>0.41</td>
+  </tr>
+  <tr>
+    <td>122</td>
+    <td>
+      <a href="https://web.archive.org/web/20161118041756/https://www.cia.gov/library/publications/the-world-factbook/geos/jm.html">
+        Jamaica
+      </a>
+    </td>
+    <td>0.41</td>
+  </tr>
+  <tr>
+    <td>123</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217215828/https://www.cia.gov/library/publications/the-world-factbook/geos/bc.html">
+        Botswana
+      </a>
+    </td>
+    <td>0.4</td>
+  </tr>
+  <tr>
+    <td>124</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215071200/https://www.cia.gov/library/publications/the-world-factbook/geos/th.html">
+        Thailand
+      </a>
+    </td>
+    <td>0.39</td>
+  </tr>
+  <tr>
+    <td>125</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219031735/https://www.cia.gov/library/publications/the-world-factbook/geos/kr.html">
+        Kiribati
+      </a>
+    </td>
+    <td>0.38</td>
+  </tr>
+  <tr>
+    <td>126</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219103223/https://www.cia.gov/library/publications/the-world-factbook/geos/wa.html">
+        Namibia
+      </a>
+    </td>
+    <td>0.37</td>
+  </tr>
+  <tr>
+    <td>127</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218220054/https://www.cia.gov/library/publications/the-world-factbook/geos/ho.html">
+        Honduras
+      </a>
+    </td>
+    <td>0.37</td>
+  </tr>
+  <tr>
+    <td>128</td>
+    <td>
+      <a href="https://web.archive.org/web/20170102165212/https://www.cia.gov/library/publications/the-world-factbook/geos/bg.html">
+        Bangladesh
+      </a>
+    </td>
+    <td>0.36</td>
+  </tr>
+  <tr>
+    <td>129</td>
+    <td>
+      <a href="https://web.archive.org/web/20161011072451/https://www.cia.gov/library/publications/the-world-factbook/geos/cv.html">
+        Cabo Verde
+      </a>
+    </td>
+    <td>0.31</td>
+  </tr>
+  <tr>
+    <td>130</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219224813/https://www.cia.gov/library/publications/the-world-factbook/geos/su.html">
+        Sudan
+      </a>
+    </td>
+    <td>0.28</td>
+  </tr>
+  <tr>
+    <td>131</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218050247/https://www.cia.gov/library/publications/the-world-factbook/geos/af.html">
+        Afghanistan
+      </a>
+    </td>
+    <td>0.27</td>
+  </tr>
+  <tr>
+    <td>132</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217213155/https://www.cia.gov/library/publications/the-world-factbook/geos/bt.html">
+        Bhutan
+      </a>
+    </td>
+    <td>0.26</td>
+  </tr>
+  <tr>
+    <td>133</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218112801/https://www.cia.gov/library/publications/the-world-factbook/geos/dj.html">
+        Djibouti
+      </a>
+    </td>
+    <td>0.23</td>
+  </tr>
+  <tr>
+    <td>134</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219204230/https://www.cia.gov/library/publications/the-world-factbook/geos/bp.html">
+        Solomon Islands
+      </a>
+    </td>
+    <td>0.22</td>
+  </tr>
+  <tr>
+    <td>135</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218205055/https://www.cia.gov/library/publications/the-world-factbook/geos/gy.html">
+        Guyana
+      </a>
+    </td>
+    <td>0.21</td>
+  </tr>
+  <tr>
+    <td>136</td>
+    <td>
+      <a href="https://web.archive.org/web/20161214052451/https://www.cia.gov/library/publications/the-world-factbook/geos/ym.html">
+        Yemen
+      </a>
+    </td>
+    <td>0.2</td>
+  </tr>
+  <tr>
+    <td>137</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215110840/https://www.cia.gov/library/publications/the-world-factbook/geos/id.html">
+        Indonesia
+      </a>
+    </td>
+    <td>0.2</td>
+  </tr>
+  <tr>
+    <td>138</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219021827/https://www.cia.gov/library/publications/the-world-factbook/geos/ke.html">
+        Kenya
+      </a>
+    </td>
+    <td>0.2</td>
+  </tr>
+  <tr>
+    <td>139</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215063957/https://www.cia.gov/library/publications/the-world-factbook/geos/la.html">
+        Laos
+      </a>
+    </td>
+    <td>0.18</td>
+  </tr>
+  <tr>
+    <td>140</td>
+    <td>
+      <a href="https://web.archive.org/web/20161208164234/https://www.cia.gov/library/publications/the-world-factbook/geos/fm.html">
+        Micronesia, Federated States Of
+      </a>
+    </td>
+    <td>0.18</td>
+  </tr>
+  <tr>
+    <td>141</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219225125/https://www.cia.gov/library/publications/the-world-factbook/geos/wz.html">
+        Swaziland
+      </a>
+    </td>
+    <td>0.17</td>
+  </tr>
+  <tr>
+    <td>142</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215083119/https://www.cia.gov/library/publications/the-world-factbook/geos/za.html">
+        Zambia
+      </a>
+    </td>
+    <td>0.17</td>
+  </tr>
+  <tr>
+    <td>143</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217150427/https://www.cia.gov/library/publications/the-world-factbook/geos/ao.html">
+        Angola
+      </a>
+    </td>
+    <td>0.17</td>
+  </tr>
+  <tr>
+    <td>144</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218021848/https://www.cia.gov/library/publications/the-world-factbook/geos/cb.html">
+        Cambodia
+      </a>
+    </td>
+    <td>0.17</td>
+  </tr>
+  <tr>
+    <td>145</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219061613/https://www.cia.gov/library/publications/the-world-factbook/geos/ma.html">
+        Madagascar
+      </a>
+    </td>
+    <td>0.16</td>
+  </tr>
+  <tr>
+    <td>146</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218075600/https://www.cia.gov/library/publications/the-world-factbook/geos/iv.html">
+        Cote D'Ivoire
+      </a>
+    </td>
+    <td>0.14</td>
+  </tr>
+  <tr>
+    <td>147</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219080348/https://www.cia.gov/library/publications/the-world-factbook/geos/mr.html">
+        Mauritania
+      </a>
+    </td>
+    <td>0.13</td>
+  </tr>
+  <tr>
+    <td>148</td>
+    <td>
+      <a href="https://web.archive.org/web/20161202020038/https://www.cia.gov/library/publications/the-world-factbook/geos/ug.html">
+        Uganda
+      </a>
+    </td>
+    <td>0.12</td>
+  </tr>
+  <tr>
+    <td>149</td>
+    <td>
+      <a href="https://web.archive.org/web/20161119015153/https://www.cia.gov/library/publications/the-world-factbook/geos/nh.html">
+        Vanuatu
+      </a>
+    </td>
+    <td>0.12</td>
+  </tr>
+  <tr>
+    <td>150</td>
+    <td>
+      <a href="https://web.archive.org/web/20170101043222/https://www.cia.gov/library/publications/the-world-factbook/geos/st.html">
+        Saint Lucia
+      </a>
+    </td>
+    <td>0.11</td>
+  </tr>
+  <tr>
+    <td>151</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218174323/https://www.cia.gov/library/publications/the-world-factbook/geos/ga.html">
+        Gambia, The
+      </a>
+    </td>
+    <td>0.11</td>
+  </tr>
+  <tr>
+    <td>152</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218062652/https://www.cia.gov/library/publications/the-world-factbook/geos/cf.html">
+        Congo, Republic Of The
+      </a>
+    </td>
+    <td>0.1</td>
+  </tr>
+  <tr>
+    <td>153</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218185842/https://www.cia.gov/library/publications/the-world-factbook/geos/gh.html">
+        Ghana
+      </a>
+    </td>
+    <td>0.1</td>
+  </tr>
+  <tr>
+    <td>154</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218205003/https://www.cia.gov/library/publications/the-world-factbook/geos/gv.html">
+        Guinea
+      </a>
+    </td>
+    <td>0.1</td>
+  </tr>
+  <tr>
+    <td>155</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218205032/https://www.cia.gov/library/publications/the-world-factbook/geos/pu.html">
+        Guinea-Bissau
+      </a>
+    </td>
+    <td>0.1</td>
+  </tr>
+  <tr>
+    <td>156</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215085741/https://www.cia.gov/library/publications/the-world-factbook/geos/cm.html">
+        Cameroon
+      </a>
+    </td>
+    <td>0.08</td>
+  </tr>
+  <tr>
+    <td>157</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217124831/https://www.cia.gov/library/publications/the-world-factbook/geos/zi.html">
+        Zimbabwe
+      </a>
+    </td>
+    <td>0.08</td>
+  </tr>
+  <tr>
+    <td>158</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219072238/https://www.cia.gov/library/publications/the-world-factbook/geos/ml.html">
+        Mali
+      </a>
+    </td>
+    <td>0.08</td>
+  </tr>
+  <tr>
+    <td>159</td>
+    <td>
+      <a href="https://web.archive.org/web/20161118041600/https://www.cia.gov/library/publications/the-world-factbook/geos/tt.html">
+        Timor-Leste
+      </a>
+    </td>
+    <td>0.07</td>
+  </tr>
+  <tr>
+    <td>160</td>
+    <td>
+      <a href="https://web.archive.org/web/20161217212718/https://www.cia.gov/library/publications/the-world-factbook/geos/bn.html">
+        Benin
+      </a>
+    </td>
+    <td>0.06</td>
+  </tr>
+  <tr>
+    <td>161</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219182352/https://www.cia.gov/library/publications/the-world-factbook/geos/rw.html">
+        Rwanda
+      </a>
+    </td>
+    <td>0.06</td>
+  </tr>
+  <tr>
+    <td>162</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219150248/https://www.cia.gov/library/publications/the-world-factbook/geos/pp.html">
+        Papua New Guinea
+      </a>
+    </td>
+    <td>0.06</td>
+  </tr>
+  <tr>
+    <td>163</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219191559/https://www.cia.gov/library/publications/the-world-factbook/geos/sg.html">
+        Senegal
+      </a>
+    </td>
+    <td>0.06</td>
+  </tr>
+  <tr>
+    <td>164</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218035052/https://www.cia.gov/library/publications/the-world-factbook/geos/ct.html">
+        Central African Republic
+      </a>
+    </td>
+    <td>0.05</td>
+  </tr>
+  <tr>
+    <td>165</td>
+    <td>
+      <a href="https://web.archive.org/web/20161118041448/https://www.cia.gov/library/publications/the-world-factbook/geos/to.html">
+        Togo
+      </a>
+    </td>
+    <td>0.05</td>
+  </tr>
+  <tr>
+    <td>166</td>
+    <td>
+      <a href="https://web.archive.org/web/20170102204848/https://www.cia.gov/library/publications/the-world-factbook/geos/uv.html">
+        Burkina Faso
+      </a>
+    </td>
+    <td>0.05</td>
+  </tr>
+  <tr>
+    <td>167</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218042043/https://www.cia.gov/library/publications/the-world-factbook/geos/cd.html">
+        Chad
+      </a>
+    </td>
+    <td>0.04</td>
+  </tr>
+  <tr>
+    <td>168</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219204250/https://www.cia.gov/library/publications/the-world-factbook/geos/so.html">
+        Somalia
+      </a>
+    </td>
+    <td>0.04</td>
+  </tr>
+  <tr>
+    <td>169</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219101300/https://www.cia.gov/library/publications/the-world-factbook/geos/mz.html">
+        Mozambique
+      </a>
+    </td>
+    <td>0.04</td>
+  </tr>
+  <tr>
+    <td>170</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218140342/https://www.cia.gov/library/publications/the-world-factbook/geos/et.html">
+        Ethiopia
+      </a>
+    </td>
+    <td>0.03</td>
+  </tr>
+  <tr>
+    <td>171</td>
+    <td>
+      <a href="https://web.archive.org/web/20170101225111/https://www.cia.gov/library/publications/the-world-factbook/geos/tz.html">
+        Tanzania
+      </a>
+    </td>
+    <td>0.03</td>
+  </tr>
+  <tr>
+    <td>172</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219191948/https://www.cia.gov/library/publications/the-world-factbook/geos/sl.html">
+        Sierra Leone
+      </a>
+    </td>
+    <td>0.02</td>
+  </tr>
+  <tr>
+    <td>173</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219121623/https://www.cia.gov/library/publications/the-world-factbook/geos/ng.html">
+        Niger
+      </a>
+    </td>
+    <td>0.02</td>
+  </tr>
+  <tr>
+    <td>174</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219062334/https://www.cia.gov/library/publications/the-world-factbook/geos/mi.html">
+        Malawi
+      </a>
+    </td>
+    <td>0.02</td>
+  </tr>
+  <tr>
+    <td>175</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219043744/https://www.cia.gov/library/publications/the-world-factbook/geos/li.html">
+        Liberia
+      </a>
+    </td>
+    <td>0.01</td>
+  </tr>
+</table>
+
+</body>
+</html>

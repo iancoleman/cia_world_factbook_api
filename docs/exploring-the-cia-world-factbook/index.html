@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Exploring the CIA World Factbook API</title>
+    <link rel="stylesheet" href="/base.css">
+    <link rel="stylesheet" href="index.css">
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="An exploration of data in the CIA World Factbook" name="description"/>
+    <meta content="Ian Coleman" name="author" />
+    <link type="image/x-icon" rel="icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" />
+</head>
+
+<body>
+
+<h1>Exploring the CIA World Factbook</h1>
+
+<p>
+The
+<a href="https://www.cia.gov/library/publications/the-world-factbook/">CIA World Factbook</a>
+is a fantastic resource. Every country in the world is represented, each with a vast range of data, and all freely available.
+</p>
+
+<p>
+Take a second to look at any country and see just how much information is there (eg
+<a href="https://www.cia.gov/library/publications/the-world-factbook/geos/ro.html">Romania</a>); it's a truly astonishing resource.
+</p>
+
+<p>
+But there's a pretty serious problem. It's only available in textual format, so doing any meaningful analysis is extremely laborious.
+</p>
+
+<p>
+The good news is the data has now been
+<a href="https://raw.githubusercontent.com/iancoleman/cia_world_factbook_api/master/data/2017-07-03_factbook.json">converted to a structured format</a>
+and can be used for many interesting applications that were previously unviable.
+</p>
+
+<p>
+The data covers about 260 countries, each with about 200 fields (often containing multiple data points per field). Prior to this data being converted it would have to be gathered manually and rechecked every time the World Factbook is updated (which is
+<a href="https://www.cia.gov/library/world-factbook-updates-november-24-2010.html">weekly</a>).
+</p>
+
+<p>
+The <strong>latest data</strong> is available on github as
+<a href="https://www.github.com/iancoleman/cia_world_factbook_api#data">
+factbook.json</a>.
+</p>
+
+<p>
+A full set of <strong>historical data</strong> is available for
+<a href="https://www.github.com/iancoleman/cia_world_factbook_api#data">
+download</a>.
+</p>
+
+<p>
+The <strong>source code</strong> is available on
+<a href="https://www.github.com/iancoleman/cia_world_factbook_api">
+github.com/iancoleman/cia_world_factbook_api</a>
+(if you want to fetch and parse the data yourself).
+</p>
+
+<p>
+Here's a demo of some of the things that can now be done that were previously just too much manual work (using data from Monday 2nd January 2017).
+</p>
+
+<h2>Charting</h2>
+
+<p>
+It's now possible to generate charts for the World Factbook, such as this histogram for the population of
+<a href="https://www.cia.gov/library/publications/the-world-factbook/docs/notesanddefs.html?fieldkey=2219&term=Major%20urban%20areas%20-%20population">Major Urban Areas</a>.
+</p>
+
+<a href="major_urban_areas_chart.png">
+    <img src="major_urban_areas_chart.png">
+</a>
+
+<p>
+It's created using 418 places from 221 countries. There were 38 countries with no major urban areas listed (eg
+<a href="https://web.archive.org/web/20161218043432/https://www.cia.gov/library/publications/the-world-factbook/geos/kt.html">Christmas Island</a>).
+</p>
+
+<p>
+And the one major urban area with less than a thousand people...? It's Melekeok (the capital of
+<a href="https://web.archive.org/web/20161214142234/https://www.cia.gov/library/publications/the-world-factbook/geos/ps.html">Palau</a>).
+</p>
+
+<h2>Statistical analysis</h2>
+
+<p>
+This is a table of stats for the number of Registered Air Carriers per country:
+</p>
+
+<table>
+    <thead>
+        <th colspan=2>
+            Registered Air Carriers
+        </th>
+    </thead>
+    <tr>
+        <td>Total</td>
+        <td>1196</td>
+    </tr>
+    <tr>
+        <td>Minimum</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>Maximum</td>
+        <td>92</td>
+    </tr>
+    <tr>
+        <td>Mean</td>
+        <td>4.7</td>
+    </tr>
+    <tr>
+        <td>Median</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>Mode</td>
+        <td>0</td>
+    </tr>
+</table>
+
+<p>
+This comes from 257 countries, with 187 countries having at least one registered air carrier and 70 countries having none.
+</p>
+
+<p>
+The country with the most air carriers?
+<a href="https://web.archive.org/web/20161218105939/https://www.cia.gov/library/publications/the-world-factbook/geos/us.html">The United States</a>
+has 92.
+</p>
+
+<h2>Ordering</h2>
+
+<p>
+Some data from the factbook is presented in a table of global rank, such as
+<a href="https://www.cia.gov/library/publications/the-world-factbook/rankorder/2225rank.html">Health Expenditure</a>,
+but many others (such as
+<a href="https://www.cia.gov/library/publications/the-world-factbook/fields/2226.html">Physicians Per 1000 Population</a>)
+do not come tabulated.
+</p>
+
+<p>
+The data set allows any fact to be ranked by country.
+</p>
+
+<table>
+  <tr>
+    <th>Rank</th>
+    <th>Country</th>
+    <th>Physicians per 1000 population</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219181905/https://www.cia.gov/library/publications/the-world-factbook/geos/qa.html">
+        Qatar
+      </a>
+    </td>
+    <td>7.74</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219093656/https://www.cia.gov/library/publications/the-world-factbook/geos/mn.html">
+        Monaco
+      </a>
+    </td>
+    <td>7.17</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>
+      <a href="https://web.archive.org/web/20161218084604/https://www.cia.gov/library/publications/the-world-factbook/geos/cu.html">
+        Cuba
+      </a>
+    </td>
+    <td>6.72</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219191300/https://www.cia.gov/library/publications/the-world-factbook/geos/sm.html">
+        San Marino
+      </a>
+    </td>
+    <td>5.1</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>
+      <a href="https://web.archive.org/web/20161215081333/https://www.cia.gov/library/publications/the-world-factbook/geos/sp.html">
+        Spain
+      </a>
+    </td>
+    <td>4.95</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>...</td>
+    <td></td>
+  <tr>
+    <td>171</td>
+    <td>
+      <a href="https://web.archive.org/web/20170101225111/https://www.cia.gov/library/publications/the-world-factbook/geos/tz.html">
+        Tanzania
+      </a>
+    </td>
+    <td>0.03</td>
+  </tr>
+  <tr>
+    <td>172</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219191948/https://www.cia.gov/library/publications/the-world-factbook/geos/sl.html">
+        Sierra Leone
+      </a>
+    </td>
+    <td>0.02</td>
+  </tr>
+  <tr>
+    <td>173</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219121623/https://www.cia.gov/library/publications/the-world-factbook/geos/ng.html">
+        Niger
+      </a>
+    </td>
+    <td>0.02</td>
+  </tr>
+  <tr>
+    <td>174</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219062334/https://www.cia.gov/library/publications/the-world-factbook/geos/mi.html">
+        Malawi
+      </a>
+    </td>
+    <td>0.02</td>
+  </tr>
+  <tr>
+    <td>175</td>
+    <td>
+      <a href="https://web.archive.org/web/20161219043744/https://www.cia.gov/library/publications/the-world-factbook/geos/li.html">
+        Liberia
+      </a>
+    </td>
+    <td>0.01</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+        <a href="physician-density">Full Table</a>
+    </td>
+    <td></td>
+  <tr>
+</table>
+
+<p>
+This data comes from 259 countries, of which 175 had a value for physicians per 1000 population and 84 did not.
+</p>
+
+<p>
+This statistic is currently not available for more than 387 million people, the largest country of which is
+<a href="https://web.archive.org/web/20161215114939/https://www.cia.gov/library/publications/the-world-factbook/geos/rp.html">the Philippines</a>
+with 102 million people.
+</p>
+
+<h2>Comparison With Third Party Data</h2>
+
+<p>
+Comparing this data with other sources is now possible, for example
+<a href="https://www.cia.gov/library/publications/the-world-factbook/docs/notesanddefs.html?fieldkey=2223&term=Maternal%20mortality%20rate">Maternal Mortality Rate</a>
+statistics can be found from both the
+<a href="http://apps.who.int/gho/data/view.main.1390?lang=en">World Health Organization</a>
+and the
+<a href="https://www.cia.gov/library/publications/the-world-factbook/rankorder/2223rank.html">CIA World Factbook</a>.
+</p>
+
+<table>
+  <tr>
+    <th>Country</th>
+    <th colspan=2>Deaths per 100K live births</th>
+  </tr>
+  <tr>
+    <th></th>
+    <th>CIA</th>
+    <th>WHO</th>
+  </tr>
+  <tr class="match">
+    <td>
+      <a href="https://web.archive.org/web/20161218050247/https://www.cia.gov/library/publications/the-world-factbook/geos/af.html">Afghanistan</a></td>
+    </td>
+    <td>396 (2015)</td>
+    <td>396 (2015)</td>
+  </tr>
+  <tr class="match">
+    <td>
+      <a href="https://web.archive.org/web/20161217144148/https://www.cia.gov/library/publications/the-world-factbook/geos/al.html">Albania</a></td>
+    </td>
+    <td>29 (2015)</td>
+    <td>29 (2015)</td>
+  </tr>
+  <tr class="match">
+    <td>
+      <a href="https://web.archive.org/web/20161217150059/https://www.cia.gov/library/publications/the-world-factbook/geos/ag.html">Algeria</a></td>
+    </td>
+    <td>140 (2015)</td>
+    <td>140 (2015)</td>
+  </tr>
+  <tr class="match">
+    <td>
+      <a href="https://web.archive.org/web/20161217150427/https://www.cia.gov/library/publications/the-world-factbook/geos/ao.html">Angola</a></td>
+    </td>
+    <td>477 (2015)</td>
+    <td>477 (2015)</td>
+  </tr>
+  <tr class="match">
+    <td>
+      <a href="https://web.archive.org/web/20161217153810/https://www.cia.gov/library/publications/the-world-factbook/geos/ar.html">Argentina</a></td>
+    </td>
+    <td>52 (2015)</td>
+    <td>52 (2015)</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="match">
+    <td>
+      <a href="https://web.archive.org/web/20161202204910/https://www.cia.gov/library/publications/the-world-factbook/geos/ve.html">Venezuela</a></td>
+    </td>
+    <td>95 (2015)</td>
+    <td>95 (2015)</td>
+  </tr>
+  <tr class="match">
+    <td>
+      <a href="https://web.archive.org/web/20161215091500/https://www.cia.gov/library/publications/the-world-factbook/geos/vm.html">Vietnam</a></td>
+    </td>
+    <td>54 (2015)</td>
+    <td>54 (2015)</td>
+  </tr>
+  <tr class="match">
+    <td>
+      <a href="https://web.archive.org/web/20161214052451/https://www.cia.gov/library/publications/the-world-factbook/geos/ym.html">Yemen</a></td>
+    </td>
+    <td>385 (2015)</td>
+    <td>385 (2015)</td>
+  </tr>
+  <tr class="match">
+    <td>
+      <a href="https://web.archive.org/web/20161215083119/https://www.cia.gov/library/publications/the-world-factbook/geos/za.html">Zambia</a></td>
+    </td>
+    <td>224 (2015)</td>
+    <td>224 (2015)</td>
+  </tr>
+  <tr class="match">
+    <td>
+      <a href="https://web.archive.org/web/20161217124831/https://www.cia.gov/library/publications/the-world-factbook/geos/zi.html">Zimbabwe</a></td>
+    </td>
+    <td>443 (2015)</td>
+    <td>443 (2015)</td>
+  </tr>
+  <tr>
+    <td><a href="maternal-mortality-rate">Full Table</a></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+<p>
+The WHO data has data for 181 countries, compared to the CIA which covers 185 countries. The four extra countries are
+<a href="https://web.archive.org/web/20161214131326/https://www.cia.gov/library/publications/the-world-factbook/geos/xx.html">The World</a>,
+<a href="https://web.archive.org/web/20161218180037/https://www.cia.gov/library/publications/the-world-factbook/geos/gz.html">Gaza Strip</a>,
+<a href="https://web.archive.org/web/20161124014804/https://www.cia.gov/library/publications/the-world-factbook/geos/we.html">West Bank</a>
+and
+<a href="https://web.archive.org/web/20161219181442/https://www.cia.gov/library/publications/the-world-factbook/geos/rq.html">Puerto Rico</a>.
+</p>
+
+<p>
+The CIA doesn't have data for 74 countries, some of which is to be expected (eg
+<a href="https://web.archive.org/web/20161219132251/https://www.cia.gov/library/publications/the-world-factbook/geos/zn.html">Pacific Ocean</a>
+has no population).
+</p>
+
+<p>
+The data matches perfectly for all 181 comparable countries.
+</p>
+
+<p>
+It's worth noting the
+<a href="https://www.cia.gov/library/publications/the-world-factbook/rankorder/2223rank.html">global rank table</a>
+for Maternal Mortality Rate is not up to date and only has data from 2010 or earlier (another benefit to using this data set).
+</p>
+
+<h2>Historical Analysis</h2>
+
+<p>
+The data goes back to 2007 (thanks to the
+<a href="https://web.archive.org/web/20170101000000*/https://www.cia.gov/library/publications/the-world-factbook/geos/xx.html">Internet Archive</a>),
+which makes it possible to see how facts have changed over time.
+</p>
+
+<p>
+A spike in
+<a href="https://www.cia.gov/library/publications/the-world-factbook/docs/notesanddefs.html?fieldkey=2112&term=Net%20migration%20rate">Net Migration Rate</a>
+for
+<a href="https://www.cia.gov/library/publications/the-world-factbook/geos/it.html">Italy</a>
+in 2011 is clear, which indicates increased migration (possibly due to the
+<a href="https://en.wikipedia.org/wiki/Arab_Spring">Arab Spring</a>
+or a precursor to the
+<a href="https://en.wikipedia.org/wiki/European_migrant_crisis">European Migrant Crisis</a>).
+
+<a href="net_migration_rate_italy.png">
+    <img src="net_migration_rate_italy.png">
+</a>
+
+<p>
+However,
+<a href="https://en.wikipedia.org/wiki/Immigration_to_Italy#Sea_arrivals">
+other data sources</a>
+seem to suggest the number of people involved in specific large immigration events are not significant in the overall measure of net migration in Italy, despite being significant in their own right.
+</p>
+
+<p>
+This chart is generated from 524 data points between June 2007 and June 2017. Collecting this data manually for each country would take an immense amount of time, but is now instantly available thanks to the
+<a href="https://www.github.com/iancoleman/cia_world_factbook_api#data">historical data</a>.
+</p>
+
+<p>
+It's also worth noting the following disclaimer from the
+<a href="https://www.cia.gov/library/publications/the-world-factbook/docs/faqs.html">Factbook FAQ</a>
+regarding time series for economic data:
+</p>
+
+<div class="quotes">
+    <div class="quote">
+    We urge caution, however, in attempting to create time series by stringing together economic data - especially dollar values - from previous editions of the Factbook . Over time, data sources, definitions, and economic accounting methods have changed. We occasionally have made these changes ourselves in order to provide our readers with the best information available. Also, in the case of dollar values, changes in relative exchange rates and prices may make trends difficult to comprehend. Therefore, individuals should consult additional resources when doing comparative research or trend analysis.
+    </div>
+</div>
+
+<h2>Summary</h2>
+
+<p>
+The examples presented above aren't especially insightful, but that's missing the point - the data is now extremely easy to use however anyone should choose (even if it's just to demonstrate some superficial examples). Prior to this it would require too much manual transposing to create even one of these examples.
+</p>
+
+<p>
+I don't know
+<a href="https://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen">how this data may be used in the future</a>,
+but I know it's a lot more useful in structured form than in text.
+I hope people come up with some some great insights from the data in the factbook.
+</p>
+
+<h1>Points of Interest</h1>
+
+<h2>Data Structure</h2>
+
+<p>
+There are a lot of edge cases in the data. Because each data point represents potentially millions of people, I felt a sincere obligation to accurately converting every data point. This was difficult since the data can be very unstructured and there are lots of unusual formats.
+</p>
+
+<p>
+The most unstructured data was often age-related information, especially Suffrage and Military Service Obligation. Try to imagine how the following examples might be structured in a consistent manner; it's almost impossible without resorting to an absurdly complex structure.
+</p>
+
+<div class="quotes">
+<h3>Suffrage</h3>
+<div class="quote">
+    <a href="https://web.archive.org/web/20161218105939/https://www.cia.gov/library/publications/the-world-factbook/geos/us.html">United States</a>:
+    <span>18 years of age; universal</span>
+</div>
+<div class="quote">
+    <a href="https://web.archive.org/web/20161217153810/https://www.cia.gov/library/publications/the-world-factbook/geos/ar.html">Argentina</a>:
+    <span>18-70 years of age; universal and compulsory; 16-17 years of age - optional for national elections</span>
+</div>
+<div class="quote">
+    <a href="https://web.archive.org/web/20161217232121/https://www.cia.gov/library/publications/the-world-factbook/geos/br.html">Brazil</a>:
+    <span>voluntary between 16 to 18 years of age and over 70; compulsory between 18 to 70 years of age; note - military conscripts by law cannot vote</span>
+</div>
+<h3>Military Service Age and Obligation</h3>
+<div class="quote">
+    <a href="https://web.archive.org/web/20161218021848/https://www.cia.gov/library/publications/the-world-factbook/geos/cb.html">Cambodia</a>:
+    <span>18 is the legal minimum age for compulsory and voluntary military service</span>
+</div>
+<div class="quote">
+    <a href="https://web.archive.org/web/20161218205032/https://www.cia.gov/library/publications/the-world-factbook/geos/pu.html">Guinea-Bissau</a>:
+    <span>18-25 years of age for selective compulsory military service (Air Force service is voluntary); 16 years of age or younger, with parental consent, for voluntary service</span>
+</div>
+<div class="quote">
+    <a href="https://web.archive.org/web/20161217160229/https://www.cia.gov/library/publications/the-world-factbook/geos/au.html">Austria</a>:
+    <span>registration requirement at age 17, the legal minimum age for voluntary military service; 18 is the legal minimum age for compulsory military service (6 months), or optionally, alternative civil/community service (9 months); males 18 to 50 years old in the militia or inactive reserve are subject to compulsory service; in a January 2012 referendum, a majority of Austrians voted in favor of retaining the system of compulsory military service (with the option of alternative/non-military service) instead of switching to a professional army system</span>
+</div>
+</div>
+
+<p>
+A fair amount of specially crafted code was required to account for facts with different formats than other countries.
+</p>
+
+<p>
+There are almost certainly still some errors in the output data. If you happen to find an error, please
+<a href="https://www.github.com/iancoleman/cia_world_factbook_api/issues">report it</a>
+so the data can be as accurate and useful as possible.
+</p>
+
+<h2>Labelling Inconsistency</h2>
+
+<p>
+There were some frustrating inconsistencies in the format of data. For example, the
+<a href="https://www.cia.gov/library/publications/the-world-factbook/fields/2120.html">Ports And Terminals</a>
+data.
+</p>
+
+<p>
+The term "river <strong>or</strong> lake port" is used by
+<a href="https://web.archive.org/web/20161218062631/https://www.cia.gov/library/publications/the-world-factbook/geos/cg.html">The Democratic Republic of the Congo</a>, but
+<a href="https://web.archive.org/web/20161218022203/https://www.cia.gov/library/publications/the-world-factbook/geos/ca.html">Canada</a>
+uses the term "river <strong>and</strong> lake port", and all other countries use just "river port" or "lake port".
+</p>
+
+<p>
+Some countries use the generic term "bulk cargo port" and others use "dry bulk cargo port".
+</p>
+
+<p>
+<a href="https://web.archive.org/web/20161217160048/https://www.cia.gov/library/publications/the-world-factbook/geos/aa.html">Aruba</a>
+has "cruise ports" but
+<a href="https://web.archive.org/web/20161216101402/https://www.cia.gov/library/publications/the-world-factbook/geos/fr.html">France</a>
+has "cruise / ferry ports".
+</p>
+
+<p>
+These kinds of inconsistencies aren't significant issues but they do make a lot of extra work detecting and coding the edge cases. Ports And Terminals is just one example of many such situations.
+</p>
+
+<h2>HTML Format Changes</h2>
+
+<p>
+Over time the html structure of the factbook has changed, which made it necessary to detect old vs new versions in order to correctly extract the text for each data point.
+</p>
+
+<p>
+The format change is sometime obvious, sometimes subtle. For an obvious one, have a look at the Australian factbook page in
+<a href="https://web.archive.org/web/20080909233031/https://www.cia.gov/library/publications/the-world-factbook/geos/as.html">2008</a>
+vs
+<a href="https://web.archive.org/web/20161215124155/https://www.cia.gov/library/publications/the-world-factbook/geos/as.html">2016</a>.
+
+</p>
+
+<h2>Population Distribution</h2>
+
+<p>
+Some countries categorize Population Distribution as part of Geography, others as part of People And Society. Despite having the same name, it has different fields in the Factbook backend (fieldkey 2266 and 2267). This is an interesting quirk. I can easily imagine some bureaucracy behind this.
+</p>
+
+<p>
+For example, <a href="https://web.archive.org/web/20161218233357/https://www.cia.gov/library/publications/the-world-factbook/geos/ic.html">Iceland</a> has duplicate entries for Population Distribution under both Geography and People And society.
+</p>
+
+<p>
+In <a href="https://www.cia.gov/library/publications/the-world-factbook/docs/notesanddefs.html?fieldkey=2267&term=Population%20distribution">the glossary</a>
+only the People And Society entry has a definition, suggesting the Geography entry is the legacy one.
+</p>
+
+<h2>Backend</h2>
+
+<p>
+The archived pages sometimes contain errors which give some clues about the technology used to host the factbook webpages.
+</p>
+
+<p>
+Technical debug information is shown instead of the expected country stats in the
+<a href="https://web.archive.org/web/20120518003057/https://www.cia.gov/library/publications/the-world-factbook/geos/hq.html">May 2012 page for Howland Island</a>.
+</p>
+
+<p>
+It looks like the site is served using Adobe ColdFusion. The stack trace contains a lot of information, but it isn't relevant data for the country so these kinds of pages are blacklisted by the scraper when they're found.
+</p>
+
+<h2>Personnel Influence</h2>
+
+<p>
+One particular error came up thanks to the presence of a personal greeting - "Hi Trent" - which can be seen on the
+<a href="https://web.archive.org/web/20140228174317/https://www.cia.gov/library/publications/the-world-factbook/geos/ma.html">February 2014 page for Madagascar</a>
+- Government - Administrative Divisions.
+</p>
+
+<p>
+It was a strange but nice reminder that real people maintain this data. I can't help but wonder what circumstances led to the inclusion of this wayward content.
+</p>
+
+<h2>Scope</h2>
+
+<p>
+Dealing with so much data at a global scope was existentially challenging. There were times where I'd step back and consider a single data point for a country that may typically be considered tiny, and try to really understand that this data point came to exist because of the daily experiences of thousands or millions of people. It was a truly humbling experience to be so intimate with this data set.
+</p>
+
+<h1>Open Source</h1>
+
+The project and data are open source.
+
+<ul>
+    <li>
+        <a href="https://www.github.com/iancoleman/cia_world_factbook_api#data">Latest and Historical data</a>
+    </li>
+    <li>
+        <a href="https://www.github.com/iancoleman/cia_world_factbook_api">Software for fetching html and parsing html to json</a>
+        -
+        MIT License
+    </li>
+    <li>
+        <a href="https://www.github.com/iancoleman/cia_world_factbook_api/issues">Please report any issues here</a>
+    </li>
+    <li>
+        <a href="https://www.cia.gov/library/publications/the-world-factbook/docs/contributor_copyright.html">CIA World Factbook copyright</a>
+        -
+        The Factbook is in the public domain. Accordingly, it may be copied freely without permission of the Central Intelligence Agency.
+    </li>
+    <li>
+        <a href="https://archive.org/about/terms.php">Internet Archive terms</a>
+        -
+        your use of any part of the Archive's Collections will be limited to noninfringing or fair use under copyright law.
+    </li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+img {
+    max-width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding-right: 18px;
+}
+
+td {
+    border-top: 1px solid #CCC;
+    padding: 7px;
+}
+
+a {
+    color: #337ab7;
+    cursor: pointer;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.quotes {
+    padding-left: 2em;
+    border-left: 5px solid #EEE;
+}
+
+.quote {
+    margin-bottom: 1em;
+}
+
+tr.mismatch {
+    background-color: #EEE;
+}
