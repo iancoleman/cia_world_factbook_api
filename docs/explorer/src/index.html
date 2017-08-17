@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="utf-8" />
+        <title>Explorer - CIA World Factbook</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/app.css">
+        <meta content="Explorer tool for the CIA World Factbook data" name="description"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <meta content="Ian Coleman" name="author" />
+        <link type="image/x-icon" rel="icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" />
+    </head>
+    <body>
+        <div class="container-fluid">
+
+            <h1 class="text-center">Explorer - CIA World Factbook</h1>
+            <div class="row file-loader">
+                <div class="col-md-12">
+                    <div id="file-dropzone" class="text-center">
+                        <p>Drag and drop factbook.json here</p>
+                        <p>or click to explore files</p>
+                    </div>
+                </div>
+                <p class="text-center">
+                or</p>
+                <p class="text-center">
+                    <button class="load-hardcoded btn btn-default">Load factbook.json for<br>2017-07-31 (3 MB)</button>
+                </p>
+                <p class="loading-hardcoded text-center hidden">Loading... may take up to 20 seconds</p>
+                <p class="error-hardcoded text-center hidden">Error loading</p>
+            </div>
+            <div class="results hidden">
+                <h2 class="filename">Table</h2>
+                <p>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#column-list-modal">
+                        Change Columns
+                    </button>
+                </p>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="active">
+                                <a href="#tabulated" data-toggle="tab">Tabulated</a>
+                            </li>
+                            <li>
+                                <a href="#csv" data-toggle="tab">CSV</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabulated">
+                                <table class="table table-hover">
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="csv">
+                                <textarea></textarea>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="column-list-modal" class="modal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Columns</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="column-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script id="column-list-item-template" type="text/template">
+<div class="column-list-item">
+    <input type="checkbox">
+    <span class="name"></span>
+</div>
+        </script>
+
+        <script src="js/jquery-3.2.1.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/papaparse.min.js"></script>
+        <script src="js/dropzone.js"></script>
+        <script src="js/factbook_table.js"></script>
+        <script src="js/factbook_csv.js"></script>
+        <script src="js/column_list.js"></script>
+        <script src="js/column_list_item.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>

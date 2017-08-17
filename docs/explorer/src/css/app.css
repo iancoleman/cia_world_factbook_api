@@ -1,0 +1,15 @@
+#file-dropzone {
+    border: 3px dashed #666;
+    padding: 3em;
+    margin: 1em auto;
+    max-width: 1024px;
+}
+
+.tab-content textarea {
+    width: 100%;
+}
+
+.load-hardcoded {
+    padding: 1em 3em;
+    line-height: 2em;
+}
