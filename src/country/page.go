@@ -408,6 +408,7 @@ func (p *Page) geographyArea() (interface{}, error) {
 	if err != nil {
 		return areas, err
 	}
+	areas = strings.Replace(areas, "water: NEGL", "water: 0 sq km", -1)
 	m, err := stringToMapOfNumbersWithUnits(areas)
 	if err != nil {
 		return areas, err
