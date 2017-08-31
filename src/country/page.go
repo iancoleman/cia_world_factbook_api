@@ -523,6 +523,10 @@ func landBoundaries(value string) (interface{}, error) {
 
 func coastline(value string) (interface{}, error) {
 	// fix edge cases
+	// see Saint Helena, Ascension and Tristan Da Cunha
+	if strings.Index(value, "Saint Helena:") > -1 {
+		return value, NoValueErr
+	}
 	// see france
 	value = convertToFranceValue(value)
 	first, others := firstLine(value)
