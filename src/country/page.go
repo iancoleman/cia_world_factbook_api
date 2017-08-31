@@ -929,6 +929,8 @@ func dependencyRatios(value string) (interface{}, error) {
 }
 
 func medianAge(value string) (interface{}, error) {
+	// See Micronesia
+	value = strings.Replace(value, "24total:", "total:", -1)
 	value, date, hasDate := stringWithoutDate(value)
 	o, err := stringToMapOfNumbersWithUnits(value)
 	if err != nil {
