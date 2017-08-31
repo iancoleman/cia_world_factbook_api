@@ -2808,6 +2808,9 @@ func telephonesFixedLines(value string) (interface{}, error) {
 }
 
 func telephonesMobileCellular(value string) (interface{}, error) {
+	// See Guam
+	value = strings.Replace(value, "inhabitatnts", "inhabitants", -1)
+	// Use words instead of numbers for json keys
 	value = strings.Replace(value, "per 100", "per one hundred", -1)
 	return stringToMapOfNumbers(value)
 }
