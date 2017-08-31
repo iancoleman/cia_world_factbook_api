@@ -1711,6 +1711,10 @@ func legislativeBranch(value string) (interface{}, error) {
 }
 
 func judicialBranch(value string) (interface{}, error) {
+	// See Turkey
+	value = strings.Replace(value, "highest court:", "highest courts:", -1)
+	// See Vanuatu
+	value = strings.Replace(value, ".highest court", "highest court", -1)
 	return stringToMap(value)
 }
 
