@@ -3135,6 +3135,8 @@ func merchantMarine(value string) (interface{}, error) {
 				o.Set(key, m)
 			}
 		} else if key == "registered_in_other_countries" {
+			// See United Arab Emirates
+			v = strings.Replace(v, "Papua New Guinea 6 (2010)", "Papua New Guinea 6) (2010)", -1)
 			m, err := stringToListOfCountsWithTotal(v, "country")
 			if err == nil {
 				o.Set(key, m)
