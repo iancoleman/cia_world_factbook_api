@@ -2420,6 +2420,10 @@ func laborForceByOccupation(value string) (interface{}, error) {
 	value = strings.Replace(value, "transport and communication", k, -1)
 	value = strings.Replace(value, "transportation and communication", k, -1)
 	value = strings.Replace(value, "transportation and communications", k, -1)
+	k = "wholesale and retail"
+	value = strings.Replace(value, "wholesale and retail trade", k, -1)
+	value = strings.Replace(value, "wholesale and retail trade, restaurants, and hotels", k, -1)
+	value = strings.Replace(value, "wholesale and retail distribution", k, -1)
 	m, err := stringToPercentageMap(value, "occupation")
 	if err != nil {
 		return m, err
