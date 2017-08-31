@@ -1074,6 +1074,15 @@ func splitByCommaOrSemicolon(s string) []string {
 func stringToDiplomat(s string) (*orderedmap.OrderedMap, error) {
 	// May be opportunity for further parsing...?
 	s = strings.Replace(s, "FAX:", "fax:", -1)
+	s = strings.Replace(s, "HKETO offices", "hketo offices", -1)
+	if strings.Index(s, "hief of mission") == 0 {
+		s = "C" + s
+	}
+	s = strings.Replace(s, "none; note - ", "note: ", -1)
+	s = strings.Replace(s, "none (self-governing overseas administrative division of Denmark): note - ", "note: ", -1)
+	s = strings.Replace(s, "none (self-governing overseas administrative division of Denmark); note - ", "note: ", -1)
+	s = strings.Replace(s, "none; commercial and cultural relations", "note: commercial and cultural relations", -1)
+	s = strings.Replace(s, "Taipei Economic and Cultural Offices (branch offices)", "branch offices", -1)
 	return stringToMap(s)
 }
 
