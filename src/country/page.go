@@ -965,6 +965,7 @@ func urbanization(value string) (interface{}, error) {
 	if err != nil {
 		return o, err
 	}
+	keysToDelete := []string{}
 	for _, k := range o.Keys() {
 		vInterface, _ := o.Get(k)
 		v := vInterface.(string)
@@ -1014,7 +1015,12 @@ func urbanization(value string) (interface{}, error) {
 				}
 				o.Set(k, citiesMap)
 			}
+		} else if v == "NA" {
+			keysToDelete = append(keysToDelete, k)
 		}
+	}
+	for _, k := range keysToDelete {
+		o.Delete(k)
 	}
 	if len(o.Keys()) == 0 {
 		return o, NoValueErr
