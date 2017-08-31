@@ -2416,6 +2416,10 @@ func laborForceTotal(value string) (interface{}, error) {
 }
 
 func laborForceByOccupation(value string) (interface{}, error) {
+	k := "transport and communications"
+	value = strings.Replace(value, "transport and communication", k, -1)
+	value = strings.Replace(value, "transportation and communication", k, -1)
+	value = strings.Replace(value, "transportation and communications", k, -1)
 	m, err := stringToPercentageMap(value, "occupation")
 	if err != nil {
 		return m, err
