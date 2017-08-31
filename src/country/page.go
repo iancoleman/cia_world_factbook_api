@@ -2168,6 +2168,7 @@ func (p *Page) nationalAnthem() (interface{}, error) {
 	if err != nil {
 		return anthemStr, err
 	}
+	anthemStr = strings.Replace(anthemStr, "the Swiss anthem has four names:", "note: the Swiss anthem has four names - ", -1)
 	m, err := stringToMap(anthemStr)
 	if err != nil {
 		return m, err
