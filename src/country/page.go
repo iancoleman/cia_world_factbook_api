@@ -875,6 +875,8 @@ func religions(value string) (interface{}, error) {
 	}
 	// remove religious affiliation
 	o.Delete("religious_affiliation")
+	o.Delete("africa")
+	o.Delete("middle_east")
 	return o, nil
 }
 
