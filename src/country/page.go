@@ -2217,6 +2217,8 @@ func (p *Page) gdpComposition() (interface{}, error) {
 }
 
 func gdpCompositionByEndUse(value string) (interface{}, error) {
+	// See American Samoa
+	value = strings.Replace(value, "investment if", "investment in", -1)
 	return stringToPercentageMap(value, "end_uses")
 }
 
