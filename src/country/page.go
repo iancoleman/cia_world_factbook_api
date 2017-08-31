@@ -2416,7 +2416,13 @@ func laborForceTotal(value string) (interface{}, error) {
 }
 
 func laborForceByOccupation(value string) (interface{}, error) {
-	return stringToPercentageMap(value, "occupation")
+	m, err := stringToPercentageMap(value, "occupation")
+	if err != nil {
+		return m, err
+	}
+	// See Cyprus
+	m.Delete("labor_force___by_occupation")
+	return m, nil
 }
 
 func unemploymentRate(value string) (interface{}, error) {
