@@ -1362,6 +1362,8 @@ func governmentType(value string) (interface{}, error) {
 }
 
 func capital(value string) (interface{}, error) {
+	// see Samoa
+	value = strings.Replace(value, "during Standard Time)\n+1hr", "during Standard Time)\ndaylight saving time: +1hr", -1)
 	m, err := stringToMap(value)
 	if err != nil {
 		return m, err
