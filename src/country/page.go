@@ -1286,6 +1286,7 @@ func educationExpenditures(value string) (interface{}, error) {
 }
 
 func literacy(value string) (interface{}, error) {
+	value = strings.Replace(value, "notes:", "note:", -1)
 	value, date, hasDate := stringWithoutDate(value)
 	o, err := stringToMap(value)
 	if err != nil {
