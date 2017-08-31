@@ -480,7 +480,6 @@ func landBoundaries(value string) (interface{}, error) {
 	if err == nil {
 		// format values more cleanly
 		keys := boundaryMap.Keys()
-		keysToRemove := []string{}
 		for _, key := range keys {
 			if key == "total" {
 				boundaryTotalStr, _ := boundaryMap.Get(key)
@@ -489,26 +488,21 @@ func landBoundaries(value string) (interface{}, error) {
 					return boundaryMap, err
 				}
 				boundaryMap.Set(key, boundaryTotalNum)
-			} else if len(key) > 16 && key[0:17] == "border_countries_" {
+			} else if key == "border_countries" {
 				borderCountriesStr, _ := boundaryMap.Get(key)
-				keysToRemove = append(keysToRemove, key)
 				borderCountries, err := borderCountriesStringToSlice(borderCountriesStr.(string))
 				if err != nil {
 					return boundaryMap, err
 				}
 				boundaryMap.Set("border_countries", borderCountries)
-			} else if len(key) > 16 && key[0:17] == "regional_borders_" {
+			} else if key == "regional_borders" {
 				regionalBordersStr, _ := boundaryMap.Get(key)
-				keysToRemove = append(keysToRemove, key)
 				regionalBorders, err := borderCountriesStringToSlice(regionalBordersStr.(string))
 				if err != nil {
 					return boundaryMap, err
 				}
 				boundaryMap.Set("regional_borders", regionalBorders)
 			}
-		}
-		for _, key := range keysToRemove {
-			boundaryMap.Delete(key)
 		}
 	} else {
 		boundaryTotal, err := stringToNumberWithUnits(value)

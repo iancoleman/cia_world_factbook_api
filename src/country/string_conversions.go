@@ -15,6 +15,7 @@ var startsWithSpaceOrParenthesis = regexp.MustCompile(`^[\s\(\)]+`)
 var endsWithSpaceOrParenthesis = regexp.MustCompile(`[\s\(\)]+$`)
 var ageStructureSplitterRe = regexp.MustCompile(`[:%\(\)/]+`)
 var commaOrSemicolon = regexp.MustCompile(`[,;]+`)
+var keyEndingWithNumber = regexp.MustCompile(`\s+\(?[0-9]+\)?:`)
 
 var StringToMapErr = errors.New("String could not be converted to map")
 var StringToMapOfNumbersErr = errors.New("String could not be converted to map of numbers")
@@ -59,6 +60,7 @@ func trimSpaceAndParenthesis(s string) string {
 }
 
 func stringToMap(s string) (*orderedmap.OrderedMap, error) {
+	s = keyEndingWithNumber.ReplaceAllString(s, ":")
 	o := orderedmap.New()
 	lines := strings.Split(s, "\n")
 	hasFirstKey := false
@@ -80,7 +82,14 @@ func stringToMap(s string) (*orderedmap.OrderedMap, error) {
 		if hasFirstKey {
 			value := strings.TrimSpace(currentValue)
 			if len(value) > 0 {
-				o.Set(currentKey, value)
+				// if key already exists, add this value to it, otherwise create this key
+				existingValue, exists := o.Get(currentKey)
+				if exists {
+					combinedValue := existingValue.(string) + "\n" + value
+					o.Set(currentKey, combinedValue)
+				} else {
+					o.Set(currentKey, value)
+				}
 			}
 			currentKey = ""
 			currentValue = ""
@@ -94,7 +103,14 @@ func stringToMap(s string) (*orderedmap.OrderedMap, error) {
 	if hasFirstKey {
 		value := strings.TrimSpace(currentValue)
 		if len(value) > 0 {
-			o.Set(currentKey, value)
+			// if key already exists, add this value to it, otherwise create this key
+			existingValue, exists := o.Get(currentKey)
+			if exists {
+				combinedValue := existingValue.(string) + "\n" + value
+				o.Set(currentKey, combinedValue)
+			} else {
+				o.Set(currentKey, value)
+			}
 		}
 	}
 	if len(o.Keys()) == 0 {
