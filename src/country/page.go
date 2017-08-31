@@ -842,11 +842,26 @@ func nationality(value string) (interface{}, error) {
 }
 
 func ethnicGroups(value string) (interface{}, error) {
-	return stringToPercentageList(value, "ethnicity")
+	// See france
+	value = strings.Replace(value, "Celtic and Latin with Teutonic", "Celtic, Latin, Teutonic", -1)
+	value = strings.Replace(value, ", Basque minorities", ", Basque", -1)
+	o, err := stringToPercentageList(value, "ethnicity")
+	if err != nil {
+		return o, err
+	}
+	// See france
+	o.Delete("overseas_departments")
+	return o, nil
 }
 
 func languages(value string) (interface{}, error) {
-	return stringToPercentageList(value, "language")
+	o, err := stringToPercentageList(value, "language")
+	if err != nil {
+		return o, err
+	}
+	// See france
+	o.Delete("overseas_departments")
+	return o, nil
 }
 
 func religions(value string) (interface{}, error) {
