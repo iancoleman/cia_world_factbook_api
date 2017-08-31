@@ -3395,6 +3395,10 @@ func traffickingInPersons(value string) (interface{}, error) {
 }
 
 func illicitDrugs(value string) (interface{}, error) {
+	// See France
+	value = strings.Replace(value, "metropolitan France:", "note: metropolitan France - ", -1)
+	value = strings.Replace(value, "French Guiana:", "note: French Guiana - ", -1)
+	value = strings.Replace(value, "Martinique:", "note: Martinique - ", -1)
 	if len(value) == 0 {
 		return value, NoValueErr
 	}
