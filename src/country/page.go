@@ -3162,6 +3162,9 @@ func portsAndTerminals(value string) (interface{}, error) {
 	value = strings.Replace(value, ", India)", " India)", -1)
 	value = strings.Replace(value, "river or lake", "river and lake", -1)
 	value = strings.Replace(value, "LNG terminal", "liquid_natural_gas terminal", -1)
+	value = strings.Replace(value, "\nSaint Helena:", " Saint Helena - ", -1)
+	value = strings.Replace(value, "\nAscension Island:", ", Ascension Island - ", -1)
+	value = strings.Replace(value, "\nTristan da Cunha:", ", Tristan da Cunha - ", -1)
 	// date
 	value, date, hasDate := stringWithoutDate(value)
 	o, err := stringToMap(value)
