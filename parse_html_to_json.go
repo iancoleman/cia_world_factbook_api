@@ -76,7 +76,7 @@ func main() {
 				defer wg.Done()
 				_, err = os.Stat(dst)
 				if !os.IsNotExist(err) {
-					logger.Stdout("Already parsed", filelocation)
+					//logger.Stdout("Already parsed", filelocation)
 					return
 				}
 				// parse the file
