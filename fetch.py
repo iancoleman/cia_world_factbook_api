@@ -37,6 +37,7 @@ blacklistRoot = config["country_html_blacklist"]
 archiveRoot = config["country_html_yearly_summaries"]
 
 goodCitizenDelay = 2
+errorDelay = 6
 
 yearForToday = datetime.datetime.utcnow().year
 
@@ -130,6 +131,12 @@ def saveArchiveYearlySummary(url):
         print("Fetching", url)
         r = requests.get(url)
         yearlySummaryContent = r.text
+        while shouldRetry(yearlySummaryContent):
+            writeStdout("Error getting yearly summary, sleeping %s seconds" % errorDelay)
+            time.sleep(errorDelay)
+            print("Fetching", url)
+            r = requests.get(url)
+            yearlySummaryContent = r.text
         f = open(dstFilename, 'w')
         f.write(yearlySummaryContent)
         f.close()
@@ -171,14 +178,21 @@ def savePageForUrl(url, date):
 
     # Fetch it if required
     if not os.path.isfile(dstFilename) and not os.path.isfile(dstBlacklist):
-        print("Fetching %s" % url)
-        r = requests.get(url)
-        content = r.text
-        # decide whether or not to blacklist this file based on content
-        if shouldBlacklist(content):
-            os.makedirs(blacklistDir, exist_ok=True)
-            dstFilename = dstBlacklist
-            print("Blacklisting %s" % url)
+        needsRetry = True
+        while needsRetry:
+            print("Fetching %s" % url)
+            r = requests.get(url)
+            content = r.text
+            # decide whether or not to blacklist this file based on content
+            if shouldBlacklist(content):
+                os.makedirs(blacklistDir, exist_ok=True)
+                dstFilename = dstBlacklist
+                print("Blacklisting %s" % url)
+            # decide whether or not to retry fetching this file based on content
+            needsRetry = shouldRetry(content)
+            if needsRetry:
+                writeStdout("Error getting page, sleeping %s seconds" % errorDelay)
+                time.sleep(errorDelay)
         # save the page content
         f = open(dstFilename, 'w')
         f.write(content)
@@ -196,6 +210,21 @@ def savePageForUrl(url, date):
             content = f.read()
             f.close()
     return content
+
+def shouldRetry(content):
+    if content is None:
+        return True
+    # detect illegal strings
+    mustNotInclude = [
+        "504 Gateway Time-out",
+    ]
+    needsRetry = False
+    for s in mustNotInclude:
+        foundForbidden = content.find(s) > -1
+        if foundForbidden:
+            print("Found forbidden retry phrase: %s" % s)
+        needsRetry = needsRetry or foundForbidden
+    return needsRetry
 
 # some files have no content, in which case they should be blacklisted
 def shouldBlacklist(content):
