@@ -129,8 +129,11 @@ def saveArchiveYearlySummary(url):
     os.makedirs(archiveRoot, exist_ok=True)
     if not os.path.isfile(dstFilename):
         print("Fetching", url)
-        r = requests.get(url)
-        yearlySummaryContent = r.text
+        try:
+            r = requests.get(url)
+            yearlySummaryContent = r.text
+        except:
+            yearlySummaryContent = None
         while shouldRetry(yearlySummaryContent):
             writeStdout("Error getting yearly summary, sleeping %s seconds" % errorDelay)
             time.sleep(errorDelay)
@@ -181,18 +184,21 @@ def savePageForUrl(url, date):
         needsRetry = True
         while needsRetry:
             print("Fetching %s" % url)
-            r = requests.get(url)
-            content = r.text
-            # decide whether or not to blacklist this file based on content
-            if shouldBlacklist(content):
-                os.makedirs(blacklistDir, exist_ok=True)
-                dstFilename = dstBlacklist
-                print("Blacklisting %s" % url)
+            try:
+                r = requests.get(url)
+                content = r.text
+            except:
+                content = None
             # decide whether or not to retry fetching this file based on content
             needsRetry = shouldRetry(content)
             if needsRetry:
                 writeStdout("Error getting page, sleeping %s seconds" % errorDelay)
                 time.sleep(errorDelay)
+        # decide whether or not to blacklist this file based on content
+        if shouldBlacklist(content):
+            os.makedirs(blacklistDir, exist_ok=True)
+            dstFilename = dstBlacklist
+            print("Blacklisting %s" % url)
         # save the page content
         f = open(dstFilename, 'w')
         f.write(content)
