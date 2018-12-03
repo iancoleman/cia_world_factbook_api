@@ -56,13 +56,13 @@ func fileIsBlacklisted(f string) bool {
 	return false
 }
 
-func textForFieldKey(doc *goquery.Document, fieldkey string) (string, error) {
+func textForSelector(doc *goquery.Document, selector Selector) (string, error) {
 	// Find the heading node for this fieldkey
-	selector := "a[href*='fieldkey=" + fieldkey + "']"
-	links := doc.Find(selector)
+	selectorStr := "a[href*='fieldkey=" + selector.FieldKey + "']"
+	links := doc.Find(selectorStr)
 	if links.Length() < 1 {
-		selector = "a[href*='fields/" + fieldkey + ".html']"
-		links = doc.Find(selector)
+		selectorStr = "a[href*='fields/" + selector.FieldKey + ".html']"
+		links = doc.Find(selectorStr)
 		if links.Length() < 1 {
 			return "", IncorrectNumberOfFieldKeyLinks
 		}
