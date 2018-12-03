@@ -57,26 +57,60 @@ func fileIsBlacklisted(f string) bool {
 }
 
 func textForSelector(doc *goquery.Document, selector Selector) (string, error) {
+	// Prepare response
+	s := ""
 	// Find the heading node for this fieldkey
 	selectorStr := "a[href*='fieldkey=" + selector.FieldKey + "']"
 	links := doc.Find(selectorStr)
 	if links.Length() < 1 {
 		selectorStr = "a[href*='fields/" + selector.FieldKey + ".html']"
 		links = doc.Find(selectorStr)
+	}
+	// if fieldkey has found a result, use it to get the text for this field
+	if links.Length() == 1 {
+		linkParent := links.First().ParentsFiltered("[class$='_light']").First()
+		// Gather text from next nodes until heading is reached
+		textNodes := linkParent.NextUntil("[class$='_light']")
+		if linkParent.Length() < 1 {
+			textNodes = links.First().Parent()
+		}
+		textNodes.Each(func(i int, node *goquery.Selection) {
+			s = s + "\n" + node.Text()
+		})
+	}
+	// if fieldkey has no result, try using id
+	if s == "" {
+		selectorStr = "#field-anchor-" + selector.Id
+		links = doc.Find(selectorStr)
 		if links.Length() < 1 {
 			return "", IncorrectNumberOfFieldKeyLinks
 		}
+		rootLink := links.First()
+		textNodes := rootLink.Next().Children()
+		textNodes.Each(func(i int, node *goquery.Selection) {
+			// get text for this node
+			nodeText := node.Text()
+			childText := ""
+			shouldUseChildText := false
+			// check if children mean we need to use a more complex extraction
+			// eg <p> children should have \n separators
+			childTextNodes := node.Children()
+			childTextNodes.Each(func(i int, childNode *goquery.Selection) {
+				childText = childText + " " + strings.TrimSpace(childNode.Text())
+				if childNode.Is("p") {
+					childText = childText + "\n"
+					shouldUseChildText = true
+				}
+			})
+			if shouldUseChildText {
+				s = s + " " + childText
+			} else {
+				s = s + " " + nodeText
+			}
+		})
+		// fix global rank value to be on same line as key
+		s = globalRankSpaces.ReplaceAllString(s, "country comparison to the world: ")
 	}
-	linkParent := links.First().ParentsFiltered("[class$='_light']").First()
-	// Gather text from next nodes until heading is reached
-	textNodes := linkParent.NextUntil("[class$='_light']")
-	if linkParent.Length() < 1 {
-		textNodes = links.First().Parent()
-	}
-	s := ""
-	textNodes.Each(func(i int, node *goquery.Selection) {
-		s = s + "\n" + node.Text()
-	})
 	s = strings.TrimSpace(s)
 	return s, nil
 }

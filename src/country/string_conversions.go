@@ -16,6 +16,7 @@ var endsWithSpaceOrParenthesis = regexp.MustCompile(`[\s\(\)]+$`)
 var ageStructureSplitterRe = regexp.MustCompile(`[:%\(\)/]+`)
 var commaOrSemicolon = regexp.MustCompile(`[,;]+`)
 var keyEndingWithNumber = regexp.MustCompile(`\s+\(?[0-9]+\)?:`)
+var globalRankSpaces = regexp.MustCompile(`country comparison to the world:\s+`)
 
 var StringToMapErr = errors.New("String could not be converted to map")
 var StringToMapOfNumbersErr = errors.New("String could not be converted to map of numbers")
@@ -666,6 +667,7 @@ func stringToNumberWithGlobalRankAndDate(s, numberKey string) (*orderedmap.Order
 	// get global rank
 	lines := strings.Split(otherLines, "\n")
 	for _, line := range lines {
+		line = strings.TrimSpace(line)
 		if len(line) > 31 && line[0:31] == "country comparison to the world" {
 			rankStr := strings.Replace(line, "country comparison to the world:", "", -1)
 			rankStr = strings.TrimSpace(rankStr)
