@@ -110,6 +110,12 @@ func textForSelector(doc *goquery.Document, selector Selector) (string, error) {
 		})
 		// fix global rank value to be on same line as key
 		s = globalRankSpaces.ReplaceAllString(s, "country comparison to the world: ")
+		// fix newlines and spaces before parenthesis
+		s = spacesBeforeParenthesis.ReplaceAllString(s, " (")
+		// fix multiple newlines
+		s = multipleNewlines.ReplaceAllString(s, "\n")
+		// fix multiple spaces after colon
+		s = spacesAfterColon.ReplaceAllString(s, ": ")
 	}
 	s = strings.TrimSpace(s)
 	return s, nil

@@ -17,6 +17,9 @@ var ageStructureSplitterRe = regexp.MustCompile(`[:%\(\)/]+`)
 var commaOrSemicolon = regexp.MustCompile(`[,;]+`)
 var keyEndingWithNumber = regexp.MustCompile(`\s+\(?[0-9]+\)?:`)
 var globalRankSpaces = regexp.MustCompile(`country comparison to the world:\s+`)
+var spacesBeforeParenthesis = regexp.MustCompile(`\s+\(`)
+var spacesAfterColon = regexp.MustCompile(`:\s+`)
+var multipleNewlines = regexp.MustCompile(`[\s*\n\s*]{2,}`)
 
 var StringToMapErr = errors.New("String could not be converted to map")
 var StringToMapOfNumbersErr = errors.New("String could not be converted to map of numbers")
@@ -29,6 +32,28 @@ var StringIsNaErr = errors.New("String is NA")
 type listConditions struct {
 	keepAnds   bool
 	splitChars string
+}
+
+func removeCommasInNumbers(s string) string {
+	// converts 123,000 to 123000
+	bits := strings.Split(s, ",")
+	noCommas := ""
+	for i, bit := range bits {
+		if i == 0 {
+			noCommas = bit
+		} else if len(bit) == 0 || len(noCommas) == 0 {
+			noCommas = noCommas + "," + bit
+		} else {
+			priorCharIsInt := strings.Index("0123456789", string(noCommas[len(noCommas)-1])) != -1
+			nextCharIsInt := strings.Index("0123456789", string(bit[0])) != -1
+			if priorCharIsInt && nextCharIsInt {
+				noCommas = noCommas + bit
+			} else {
+				noCommas = noCommas + "," + bit
+			}
+		}
+	}
+	return noCommas
 }
 
 func stringToJsonKey(s string) string {
@@ -916,14 +941,14 @@ func stringToAgeStructureMap(s string) (*orderedmap.OrderedMap, error) {
 		// male
 		maleStr := strings.Replace(bits[3], "male ", "", -1)
 		maleStr = strings.Replace(maleStr, ",", "", -1)
-		male, err := strconv.Atoi(maleStr)
+		male, err := strconv.Atoi(strings.TrimSpace(maleStr))
 		if err == nil {
 			o.Set("males", male)
 		}
 		// female
 		femaleStr := strings.Replace(bits[4], "female ", "", -1)
 		femaleStr = strings.Replace(femaleStr, ",", "", -1)
-		female, err := strconv.Atoi(femaleStr)
+		female, err := strconv.Atoi(strings.TrimSpace(femaleStr))
 		if err == nil {
 			o.Set("females", female)
 		}
@@ -962,6 +987,7 @@ func endsWith(s, t string) bool {
 }
 
 func stringToImprovedUnimprovedList(s string) (*orderedmap.OrderedMap, error) {
+	s = strings.Replace(s, "improved: ", "improved:\n", -1)
 	o := orderedmap.New()
 	improved := orderedmap.New()
 	unimproved := orderedmap.New()

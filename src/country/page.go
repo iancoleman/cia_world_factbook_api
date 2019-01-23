@@ -3,9 +3,9 @@ package country
 import (
 	"errors"
 	"github.com/PuerkitoBio/goquery"
+	"io/ioutil"
 	"net/url"
 	"orderedmap"
-	"os"
 	"path"
 	"strconv"
 	"strings"
@@ -34,12 +34,16 @@ func NewPage(f string) (Page, error) {
 		filelocation: f,
 		ParsedData:   orderedmap.New(),
 	}
-	// read the dom
-	r, err := os.Open(p.filelocation)
+	// read the html file
+	fileBytes, err := ioutil.ReadFile(p.filelocation)
 	if err != nil {
 		return p, err
 	}
-	p.dom, err = goquery.NewDocumentFromReader(r)
+	// fix <br> tags before parsing to include newline as text
+	fileString := string(fileBytes)
+	fileString = strings.Replace(fileString, "<br>", "\n<br>", -1)
+	// create new document
+	p.dom, err = goquery.NewDocumentFromReader(strings.NewReader(fileString))
 	if err != nil {
 		return p, err
 	}
@@ -189,16 +193,16 @@ func (p *Page) people() (interface{}, error) {
 	p.tryAddingDataForSelector(peopleData, "languages", Selector{"2098", "people-and-society-languages"}, languages)
 	p.tryAddingDataForSelector(peopleData, "religions", Selector{"2122", "people-and-society-religions"}, religions)
 	p.tryAddingDataForSelector(peopleData, "demographic_profile", Selector{"2257", ""}, demographicProfile)
-	p.tryAddingDataForSelector(peopleData, "age_structure", Selector{"2010", ""}, ageStructure)
+	p.tryAddingDataForSelector(peopleData, "age_structure", Selector{"2010", "people-and-society-age-structure"}, ageStructure)
 	p.tryAddingDataForSelector(peopleData, "dependency_ratios", Selector{"2261", "people-and-society-dependency-ratios"}, dependencyRatios)
 	p.tryAddingDataForSelector(peopleData, "median_age", Selector{"2177", "people-and-society-median-age"}, medianAge)
-	p.tryAddingDataForSelector(peopleData, "population_growth_rate", Selector{"2002", ""}, populationGrowthRate)
-	p.tryAddingDataForSelector(peopleData, "birth_rate", Selector{"2054", ""}, birthRate)
-	p.tryAddingDataForSelector(peopleData, "death_rate", Selector{"2066", ""}, deathRate)
-	p.tryAddingDataForSelector(peopleData, "net_migration_rate", Selector{"2112", ""}, netMigrationRate)
+	p.tryAddingDataForSelector(peopleData, "population_growth_rate", Selector{"2002", "people-and-society-population-growth-rate"}, populationGrowthRate)
+	p.tryAddingDataForSelector(peopleData, "birth_rate", Selector{"2054", "people-and-society-birth-rate"}, birthRate)
+	p.tryAddingDataForSelector(peopleData, "death_rate", Selector{"2066", "people-and-society-death-rate"}, deathRate)
+	p.tryAddingDataForSelector(peopleData, "net_migration_rate", Selector{"2112", "people-and-society-net-migration-rate"}, netMigrationRate)
 	p.tryAddingDataForSelector(peopleData, "population_distribution", Selector{"2267", "people-and-society-population-distribution"}, populationDistribution)
 	p.tryAddingDataForSelector(peopleData, "urbanization", Selector{"2212", "people-and-society-urbanization"}, urbanization)
-	p.tryAddingDataForSelector(peopleData, "major_urban_areas", Selector{"2219", ""}, majorUrbanAreas)
+	p.tryAddingDataForSelector(peopleData, "major_urban_areas", Selector{"2219", "people-and-society-major-urban-areas-population"}, majorUrbanAreas)
 	p.tryAddingDataForSelector(peopleData, "sex_ratio", Selector{"2018", "people-and-society-sex-ratio"}, sexRatio)
 	p.tryAddingDataForSelector(peopleData, "mothers_mean_age_at_first_birth", Selector{"2256", "people-and-society-mother-s-mean-age-at-first-birth"}, mothersMeanAgeAtFirstBirth)
 	p.tryAddingDataForSelector(peopleData, "maternal_mortality_rate", Selector{"2223", "people-and-society-maternal-mortality-rate"}, maternalMortalityRate)
@@ -209,8 +213,8 @@ func (p *Page) people() (interface{}, error) {
 	p.tryAddingDataForSelector(peopleData, "health_expenditures", Selector{"2225", "people-and-society-health-expenditures"}, healthExpenditures)
 	p.tryAddingDataForSelector(peopleData, "physicians_density", Selector{"2226", "people-and-society-physicians-density"}, physiciansDensity)
 	p.tryAddingDataForSelector(peopleData, "hospital_bed_density", Selector{"2227", "people-and-society-hospital-bed-density"}, hospitalBedDensity)
-	p.tryAddingDataForSelector(peopleData, "drinking_water_source", Selector{"2216", ""}, drinkingWaterSource)
-	p.tryAddingDataForSelector(peopleData, "sanitation_facility_access", Selector{"2217", ""}, sanitationFacilityAccess)
+	p.tryAddingDataForSelector(peopleData, "drinking_water_source", Selector{"2216", "people-and-society-drinking-water-source"}, drinkingWaterSource)
+	p.tryAddingDataForSelector(peopleData, "sanitation_facility_access", Selector{"2217", "people-and-society-sanitation-facility-access"}, sanitationFacilityAccess)
 	tryAddingData(peopleData, "hiv_aids", p.hivAids)
 	p.tryAddingDataForSelector(peopleData, "major_infectious_diseases", Selector{"2193", ""}, majorInfectiousDiseases)
 	p.tryAddingDataForSelector(peopleData, "adult_obesity", Selector{"2228", "people-and-society-obesity-adult-prevalence-rate"}, obesityAdultPrevalenceRate)
@@ -239,7 +243,7 @@ func (p *Page) government() (interface{}, error) {
 	p.tryAddingDataForSelector(governmentData, "dependent_areas", Selector{"2068", "government-dependent-areas"}, dependentAreas)
 	p.tryAddingDataForSelector(governmentData, "independence", Selector{"2088", "government-independence"}, independence)
 	p.tryAddingDataForSelector(governmentData, "national_holidays", Selector{"2109", "government-national-holiday"}, nationalHoliday)
-	p.tryAddingDataForSelector(governmentData, "constitution", Selector{"2063", ""}, constitution)
+	p.tryAddingDataForSelector(governmentData, "constitution", Selector{"2063", "government-constitution"}, constitution)
 	p.tryAddingDataForSelector(governmentData, "legal_system", Selector{"2100", "government-legal-system"}, legalSystem)
 	p.tryAddingDataForSelector(governmentData, "international_law_organization_participation", Selector{"2220", "government-international-law-organization-participation"}, internationalLaw)
 	p.tryAddingDataForSelector(governmentData, "citizenship", Selector{"2263", "government-citizenship"}, citizenship)
@@ -247,7 +251,7 @@ func (p *Page) government() (interface{}, error) {
 	p.tryAddingDataForSelector(governmentData, "executive_branch", Selector{"2077", "government-executive-branch"}, executiveBranch)
 	p.tryAddingDataForSelector(governmentData, "legislative_branch", Selector{"2101", "government-legislative-branch"}, legislativeBranch)
 	p.tryAddingDataForSelector(governmentData, "judicial_branch", Selector{"2094", "government-judicial-branch"}, judicialBranch)
-	p.tryAddingDataForSelector(governmentData, "political_parties_and_leaders", Selector{"2118", ""}, politicalPartiesAndLeaders)
+	p.tryAddingDataForSelector(governmentData, "political_parties_and_leaders", Selector{"2118", "government-political-parties-and-leaders"}, politicalPartiesAndLeaders)
 	p.tryAddingDataForSelector(governmentData, "political_pressure_groups_and_leaders", Selector{"2115", ""}, politicalPressureGroupsAndLeaders)
 	p.tryAddingDataForSelector(governmentData, "international_organization_participation", Selector{"2107", "government-international-organization-participation"}, internationalOrganizationParticipation)
 	tryAddingData(governmentData, "diplomatic_representation", p.diplomaticRepresentation)
@@ -263,39 +267,39 @@ func (p *Page) government() (interface{}, error) {
 
 func (p *Page) economy() (interface{}, error) {
 	economyData := orderedmap.New()
-	p.tryAddingDataForSelector(economyData, "overview", Selector{"2116", ""}, economyOverview)
+	p.tryAddingDataForSelector(economyData, "overview", Selector{"2116", "economy-economy-overview"}, economyOverview)
 	tryAddingData(economyData, "gdp", p.gdp)
-	p.tryAddingDataForSelector(economyData, "gross_national_saving", Selector{"2260", ""}, grossNationalSaving)
-	p.tryAddingDataForSelector(economyData, "agriculture_products", Selector{"2052", ""}, agricultureProducts)
-	p.tryAddingDataForSelector(economyData, "industries", Selector{"2090", ""}, industries)
-	p.tryAddingDataForSelector(economyData, "industrial_production_growth_rate", Selector{"2089", ""}, industrialProductionGrowthRate)
+	p.tryAddingDataForSelector(economyData, "gross_national_saving", Selector{"2260", "economy-gross-national-saving"}, grossNationalSaving)
+	p.tryAddingDataForSelector(economyData, "agriculture_products", Selector{"2052", "economy-agriculture-products"}, agricultureProducts)
+	p.tryAddingDataForSelector(economyData, "industries", Selector{"2090", "economy-industries"}, industries)
+	p.tryAddingDataForSelector(economyData, "industrial_production_growth_rate", Selector{"2089", "economy-industrial-production-growth-rate"}, industrialProductionGrowthRate)
 	tryAddingData(economyData, "labor_force", p.laborForce)
-	p.tryAddingDataForSelector(economyData, "unemployment_rate", Selector{"2129", ""}, unemploymentRate)
+	p.tryAddingDataForSelector(economyData, "unemployment_rate", Selector{"2129", "economy-unemployment-rate"}, unemploymentRate)
 	p.tryAddingDataForSelector(economyData, "population_below_poverty_line", Selector{"2046", ""}, populationBelowPovertyLine)
-	p.tryAddingDataForSelector(economyData, "household_income_by_percentage_share", Selector{"2047", ""}, householdIncomeByPercentageShare)
-	p.tryAddingDataForSelector(economyData, "distribution_of_family_income", Selector{"2172", ""}, distributionOfFamilyIncome)
+	p.tryAddingDataForSelector(economyData, "household_income_by_percentage_share", Selector{"2047", "economy-household-income-or-consumption-by-percentage-share"}, householdIncomeByPercentageShare)
+	p.tryAddingDataForSelector(economyData, "distribution_of_family_income", Selector{"2172", "economy-distribution-of-family-income-gini-index"}, distributionOfFamilyIncome)
 	p.tryAddingDataForSelector(economyData, "investment_gross_fixed", Selector{"2185", ""}, investmentGrossFixed)
-	p.tryAddingDataForSelector(economyData, "budget", Selector{"2056", ""}, budget)
-	p.tryAddingDataForSelector(economyData, "taxes_and_other_revenues", Selector{"2221", ""}, taxesAndOtherRevenues)
-	p.tryAddingDataForSelector(economyData, "budget_surplus_or_deficit", Selector{"2222", ""}, budgetSurplusOrDeficit)
-	p.tryAddingDataForSelector(economyData, "public_debt", Selector{"2186", ""}, publicDebt)
-	p.tryAddingDataForSelector(economyData, "fiscal_year", Selector{"2080", ""}, fiscalYear)
-	p.tryAddingDataForSelector(economyData, "inflation_rate", Selector{"2092", ""}, inflationRate)
-	p.tryAddingDataForSelector(economyData, "central_bank_discount_rate", Selector{"2207", ""}, centralBankDiscountRate)
-	p.tryAddingDataForSelector(economyData, "commercial_bank_prime_lending_rate", Selector{"2208", ""}, commercialBankPrimeLendingRate)
+	p.tryAddingDataForSelector(economyData, "budget", Selector{"2056", "economy-budget"}, budget)
+	p.tryAddingDataForSelector(economyData, "taxes_and_other_revenues", Selector{"2221", "economy-taxes-and-other-revenues"}, taxesAndOtherRevenues)
+	p.tryAddingDataForSelector(economyData, "budget_surplus_or_deficit", Selector{"2222", "economy-budget-surplus-or-deficit"}, budgetSurplusOrDeficit)
+	p.tryAddingDataForSelector(economyData, "public_debt", Selector{"2186", "economy-public-debt"}, publicDebt)
+	p.tryAddingDataForSelector(economyData, "fiscal_year", Selector{"2080", "economy-fiscal-year"}, fiscalYear)
+	p.tryAddingDataForSelector(economyData, "inflation_rate", Selector{"2092", "economy-inflation-rate-consumer-prices"}, inflationRate)
+	p.tryAddingDataForSelector(economyData, "central_bank_discount_rate", Selector{"2207", "economy-central-bank-discount-rate"}, centralBankDiscountRate)
+	p.tryAddingDataForSelector(economyData, "commercial_bank_prime_lending_rate", Selector{"2208", "economy-commercial-bank-prime-lending-rate"}, commercialBankPrimeLendingRate)
 	p.tryAddingDataForSelector(economyData, "stock_of_money", Selector{"2209", ""}, stockOfMoney)
 	p.tryAddingDataForSelector(economyData, "stock_of_quasi_money", Selector{"2210", ""}, stockOfQuasiMoney)
-	p.tryAddingDataForSelector(economyData, "stock_of_narrow_money", Selector{"2214", ""}, stockOfNarrowMoney)
-	p.tryAddingDataForSelector(economyData, "stock_of_broad_money", Selector{"2215", ""}, stockOfBroadMoney)
-	p.tryAddingDataForSelector(economyData, "stock_of_domestic_credit", Selector{"2211", ""}, stockOfDomesticCredit)
-	p.tryAddingDataForSelector(economyData, "market_value_of_publicly_traded_shares", Selector{"2200", ""}, marketValueOfPubliclyTradedShares)
-	p.tryAddingDataForSelector(economyData, "current_account_balance", Selector{"2187", ""}, currentAccountBalance)
+	p.tryAddingDataForSelector(economyData, "stock_of_narrow_money", Selector{"2214", "economy-stock-of-narrow-money"}, stockOfNarrowMoney)
+	p.tryAddingDataForSelector(economyData, "stock_of_broad_money", Selector{"2215", "economy-stock-of-broad-money"}, stockOfBroadMoney)
+	p.tryAddingDataForSelector(economyData, "stock_of_domestic_credit", Selector{"2211", "economy-stock-of-domestic-credit"}, stockOfDomesticCredit)
+	p.tryAddingDataForSelector(economyData, "market_value_of_publicly_traded_shares", Selector{"2200", "economy-market-value-of-publicly-traded-shares"}, marketValueOfPubliclyTradedShares)
+	p.tryAddingDataForSelector(economyData, "current_account_balance", Selector{"2187", "economy-current-account-balance"}, currentAccountBalance)
 	tryAddingData(economyData, "exports", p.exports)
 	tryAddingData(economyData, "imports", p.imports)
-	p.tryAddingDataForSelector(economyData, "reserves_of_foreign_exchange_and_gold", Selector{"2188", ""}, reservesOfForeignExchangeAndGold)
-	p.tryAddingDataForSelector(economyData, "external_debt", Selector{"2079", ""}, externalDebt)
+	p.tryAddingDataForSelector(economyData, "reserves_of_foreign_exchange_and_gold", Selector{"2188", "economy-reserves-of-foreign-exchange-and-gold"}, reservesOfForeignExchangeAndGold)
+	p.tryAddingDataForSelector(economyData, "external_debt", Selector{"2079", "economy-debt-external"}, externalDebt)
 	tryAddingData(economyData, "stock_of_direct_foreign_investment", p.stockOfDirectForeignInvestment)
-	p.tryAddingDataForSelector(economyData, "exchange_rates", Selector{"2076", ""}, exchangeRates)
+	p.tryAddingDataForSelector(economyData, "exchange_rates", Selector{"2076", "economy-exchange-rates"}, exchangeRates)
 	//p.tryAddingDataForSelector(economyData, "economy_of_the_area_administered_by_turkish_cypriots", Selector{"2204", ""}, economyOfTurkishCypriots)
 	if len(economyData.Keys()) == 0 {
 		return economyData, NoValueErr
@@ -309,7 +313,7 @@ func (p *Page) energy() (interface{}, error) {
 	tryAddingData(energyData, "crude_oil", p.crudeOil)
 	tryAddingData(energyData, "refined_petroleum_products", p.refinedPetroleumProducts)
 	tryAddingData(energyData, "natural_gas", p.naturalGas)
-	p.tryAddingDataForSelector(energyData, "carbon_dioxide_emissions_from_consumption_of_energy", Selector{"2254", ""}, carbonDioxideEmissions)
+	p.tryAddingDataForSelector(energyData, "carbon_dioxide_emissions_from_consumption_of_energy", Selector{"2254", "energy-carbon-dioxide-emissions-from-consumption-of-energy"}, carbonDioxideEmissions)
 	if len(energyData.Keys()) == 0 {
 		return energyData, NoValueErr
 	}
@@ -319,7 +323,7 @@ func (p *Page) energy() (interface{}, error) {
 func (p *Page) communications() (interface{}, error) {
 	commsData := orderedmap.New()
 	tryAddingData(commsData, "telephones", p.telephones)
-	p.tryAddingDataForSelector(commsData, "broadcast_media", Selector{"2213", ""}, broadcastMedia)
+	p.tryAddingDataForSelector(commsData, "broadcast_media", Selector{"2213", "communications-broadcast-media"}, broadcastMedia)
 	p.tryAddingDataForSelector(commsData, "radio_broadcast_stations", Selector{"2013", ""}, radioBroacastStations)
 	p.tryAddingDataForSelector(commsData, "television_broadcast_stations", Selector{"2015", ""}, televisionBroacastStations)
 	tryAddingData(commsData, "internet", p.internet)
@@ -333,12 +337,12 @@ func (p *Page) communications() (interface{}, error) {
 func (p *Page) transportation() (interface{}, error) {
 	transportData := orderedmap.New()
 	tryAddingData(transportData, "air_transport", p.airTransport)
-	p.tryAddingDataForSelector(transportData, "pipelines", Selector{"2117", ""}, pipelines)
-	p.tryAddingDataForSelector(transportData, "railways", Selector{"2121", ""}, railways)
-	p.tryAddingDataForSelector(transportData, "roadways", Selector{"2085", ""}, roadways)
-	p.tryAddingDataForSelector(transportData, "waterways", Selector{"2093", ""}, waterways)
-	p.tryAddingDataForSelector(transportData, "merchant_marine", Selector{"2108", ""}, merchantMarine)
-	p.tryAddingDataForSelector(transportData, "ports_and_terminals", Selector{"2120", ""}, portsAndTerminals)
+	p.tryAddingDataForSelector(transportData, "pipelines", Selector{"2117", "transportation-pipelines"}, pipelines)
+	p.tryAddingDataForSelector(transportData, "railways", Selector{"2121", "transportation-railways"}, railways)
+	p.tryAddingDataForSelector(transportData, "roadways", Selector{"2085", "transportation-roadways"}, roadways)
+	p.tryAddingDataForSelector(transportData, "waterways", Selector{"2093", "transportation-waterways"}, waterways)
+	p.tryAddingDataForSelector(transportData, "merchant_marine", Selector{"2108", "transportation-merchant-marine"}, merchantMarine)
+	p.tryAddingDataForSelector(transportData, "ports_and_terminals", Selector{"2120", "transportation-ports-and-terminals"}, portsAndTerminals)
 	p.tryAddingDataForSelector(transportData, "shipyards_and_ship_building", Selector{"2231", ""}, shipyardsAndShipBuilding)
 	p.tryAddingDataForSelector(transportData, "note", Selector{"2008", ""}, transportNote)
 	if len(transportData.Keys()) == 0 {
@@ -349,10 +353,10 @@ func (p *Page) transportation() (interface{}, error) {
 
 func (p *Page) militaryAndSecurity() (interface{}, error) {
 	militaryData := orderedmap.New()
-	p.tryAddingDataForSelector(militaryData, "expenditures", Selector{"2034", ""}, militaryExpenditures)
-	p.tryAddingDataForSelector(militaryData, "branches", Selector{"2055", ""}, militaryBranches)
+	p.tryAddingDataForSelector(militaryData, "expenditures", Selector{"2034", "military-and-security-military-expenditures"}, militaryExpenditures)
+	p.tryAddingDataForSelector(militaryData, "branches", Selector{"2055", "military-and-security-military-branches"}, militaryBranches)
 	tryAddingData(militaryData, "manpower", p.militaryManpower)
-	p.tryAddingDataForSelector(militaryData, "service_age_and_obligation", Selector{"2024", ""}, militaryServiceAgeAndObligation)
+	p.tryAddingDataForSelector(militaryData, "service_age_and_obligation", Selector{"2024", "military-and-security-military-service-age-and-obligation"}, militaryServiceAgeAndObligation)
 	p.tryAddingDataForSelector(militaryData, "terrorist_groups", Selector{"2265", ""}, terroristGroups)
 	p.tryAddingDataForSelector(militaryData, "note", Selector{"2137", ""}, militaryNote)
 	if len(militaryData.Keys()) == 0 {
@@ -363,10 +367,10 @@ func (p *Page) militaryAndSecurity() (interface{}, error) {
 
 func (p *Page) transnationalIssues() (interface{}, error) {
 	issuesData := orderedmap.New()
-	p.tryAddingDataForSelector(issuesData, "disputes", Selector{"2070", ""}, disputes)
-	p.tryAddingDataForSelector(issuesData, "refugees_and_iternally_displaced_persons", Selector{"2194", ""}, refugees)
+	p.tryAddingDataForSelector(issuesData, "disputes", Selector{"2070", "transnational-issues-disputes-international"}, disputes)
+	p.tryAddingDataForSelector(issuesData, "refugees_and_iternally_displaced_persons", Selector{"2194", "transnational-issues-refugees-and-internally-displaced-persons"}, refugees)
 	p.tryAddingDataForSelector(issuesData, "trafficking_in_persons", Selector{"2196", ""}, traffickingInPersons)
-	p.tryAddingDataForSelector(issuesData, "illicit_drugs", Selector{"2086", ""}, illicitDrugs)
+	p.tryAddingDataForSelector(issuesData, "illicit_drugs", Selector{"2086", "transnational-issues-illicit-drugs"}, illicitDrugs)
 	if len(issuesData.Keys()) == 0 {
 		return issuesData, NoValueErr
 	}
@@ -409,7 +413,7 @@ func mapReferences(value string) (interface{}, error) {
 func (p *Page) geographyArea() (interface{}, error) {
 	// Combination of two fields - areas and comparitive
 	// areas
-	areas, err := textForSelector(p.dom, Selector{"2147", ""})
+	areas, err := textForSelector(p.dom, Selector{"2147", "geography-area"})
 	if err != nil {
 		return areas, err
 	}
@@ -458,7 +462,7 @@ func (p *Page) geographyArea() (interface{}, error) {
 		m.Set("note", "metropolitan France")
 	}
 	// comparative
-	comparative, err := textForSelector(p.dom, Selector{"2023", ""})
+	comparative, err := textForSelector(p.dom, Selector{"2023", "geography-area-comparative"})
 	if err != nil {
 		return comparative, err
 	}
@@ -1039,20 +1043,23 @@ func majorUrbanAreas(value string) (interface{}, error) {
 	// parse list of places and populations
 	o := orderedmap.New()
 	places := []*orderedmap.OrderedMap{}
-	bits := strings.Split(s, ";")
+	s = removeCommasInNumbers(s)
+	bits := splitByCommaOrSemicolon(s)
 	for _, bit := range bits {
+		bit = strings.TrimSpace(bit)
 		placeMap := orderedmap.New()
 		s, ps := removeParenthesis(bit)
 		// get place name
 		placeStr := ""
-		placeStrEndIndex := 0
 		placeBits := strings.Split(s, " ")
-		for i, placeBit := range placeBits {
-			if !startsWithNumber(placeBit) {
-				placeStr = placeStr + " " + placeBit
-				placeStrEndIndex = i
+		populationStr := ""
+		for _, placeBit := range placeBits {
+			if startsWithNumber(placeBit) {
+				populationStr = placeBit
+			} else if placeBit == "million" {
+				populationStr = populationStr + " " + placeBit
 			} else {
-				break
+				placeStr = placeStr + " " + placeBit
 			}
 		}
 		placeStr = strings.TrimSpace(placeStr)
@@ -1062,12 +1069,8 @@ func majorUrbanAreas(value string) (interface{}, error) {
 			continue
 		}
 		// get place population
-		hasPopulation := false
-		populationStr := strings.Join(placeBits[placeStrEndIndex:len(placeBits)], " ")
 		population, err := stringToNumber(populationStr)
-		if err == nil {
-			hasPopulation = true
-		}
+		hasPopulation := err == nil
 		// get capital / note
 		notes := []string{}
 		isCapital := false
@@ -2727,12 +2730,12 @@ func economyOfTurkishCypriots(value string) (interface{}, error) {
 
 func (p *Page) electricity() (interface{}, error) {
 	electricity := orderedmap.New()
-	p.tryAddingDataForSelector(electricity, "access", Selector{"2268", ""}, electricityAccess)
-	p.tryAddingDataForSelector(electricity, "production", Selector{"2232", ""}, electricityTotalKwh)
-	p.tryAddingDataForSelector(electricity, "consumption", Selector{"2233", ""}, electricityTotalKwh)
-	p.tryAddingDataForSelector(electricity, "exports", Selector{"2234", ""}, electricityTotalKwh)
-	p.tryAddingDataForSelector(electricity, "imports", Selector{"2235", ""}, electricityTotalKwh)
-	p.tryAddingDataForSelector(electricity, "installed_generating_capacity", Selector{"2236", ""}, electricityTotalKw)
+	p.tryAddingDataForSelector(electricity, "access", Selector{"2268", "energy-electricity-access"}, electricityAccess)
+	p.tryAddingDataForSelector(electricity, "production", Selector{"2232", "energy-electricity-production"}, electricityTotalKwh)
+	p.tryAddingDataForSelector(electricity, "consumption", Selector{"2233", "energy-electricity-consumption"}, electricityTotalKwh)
+	p.tryAddingDataForSelector(electricity, "exports", Selector{"2234", "energy-electricity-exports"}, electricityTotalKwh)
+	p.tryAddingDataForSelector(electricity, "imports", Selector{"2235", "energy-electricity-imports"}, electricityTotalKwh)
+	p.tryAddingDataForSelector(electricity, "installed_generating_capacity", Selector{"2236", "energy-electricity-installed-generating-capacity"}, electricityTotalKw)
 	tryAddingData(electricity, "by_source", p.electricityFrom)
 	keys := electricity.Keys()
 	if len(keys) == 0 {
@@ -2785,10 +2788,10 @@ func electricityTotalKw(value string) (interface{}, error) {
 
 func (p *Page) electricityFrom() (interface{}, error) {
 	from := orderedmap.New()
-	p.tryAddingDataForSelector(from, "fossil_fuels", Selector{"2237", ""}, electricityPercent)
-	p.tryAddingDataForSelector(from, "nuclear_fuels", Selector{"2239", ""}, electricityPercent)
-	p.tryAddingDataForSelector(from, "hydroelectric_plants", Selector{"2238", ""}, electricityPercent)
-	p.tryAddingDataForSelector(from, "other_renewable_sources", Selector{"2240", ""}, electricityPercent)
+	p.tryAddingDataForSelector(from, "fossil_fuels", Selector{"2237", "energy-electricity-from-fossil-fuels"}, electricityPercent)
+	p.tryAddingDataForSelector(from, "nuclear_fuels", Selector{"2239", "energy-electricity-from-nuclear-fuels"}, electricityPercent)
+	p.tryAddingDataForSelector(from, "hydroelectric_plants", Selector{"2238", "energy-electricity-from-hydroelectric-plants"}, electricityPercent)
+	p.tryAddingDataForSelector(from, "other_renewable_sources", Selector{"2240", "energy-electricity-from-other-renewable-sources"}, electricityPercent)
 	keys := from.Keys()
 	if len(keys) == 0 {
 		return from, NoValueErr
@@ -2803,10 +2806,10 @@ func electricityPercent(value string) (interface{}, error) {
 
 func (p *Page) crudeOil() (interface{}, error) {
 	oil := orderedmap.New()
-	p.tryAddingDataForSelector(oil, "production", Selector{"2241", ""}, crudeOilBblPerDay)
-	p.tryAddingDataForSelector(oil, "exports", Selector{"2242", ""}, crudeOilBblPerDay)
-	p.tryAddingDataForSelector(oil, "imports", Selector{"2243", ""}, crudeOilBblPerDay)
-	p.tryAddingDataForSelector(oil, "proved_reserves", Selector{"2244", ""}, crudeOilBbl)
+	p.tryAddingDataForSelector(oil, "production", Selector{"2241", "energy-crude-oil-production"}, crudeOilBblPerDay)
+	p.tryAddingDataForSelector(oil, "exports", Selector{"2242", "energy-crude-oil-exports"}, crudeOilBblPerDay)
+	p.tryAddingDataForSelector(oil, "imports", Selector{"2243", "energy-crude-oil-imports"}, crudeOilBblPerDay)
+	p.tryAddingDataForSelector(oil, "proved_reserves", Selector{"2244", "energy-crude-oil-proved-reserves"}, crudeOilBbl)
 	keys := oil.Keys()
 	if len(keys) == 0 {
 		return oil, NoValueErr
@@ -2824,10 +2827,10 @@ func crudeOilBbl(value string) (interface{}, error) {
 
 func (p *Page) refinedPetroleumProducts() (interface{}, error) {
 	petrol := orderedmap.New()
-	p.tryAddingDataForSelector(petrol, "production", Selector{"2245", ""}, crudeOilBblPerDay)
-	p.tryAddingDataForSelector(petrol, "consumption", Selector{"2246", ""}, crudeOilBblPerDay)
-	p.tryAddingDataForSelector(petrol, "exports", Selector{"2247", ""}, crudeOilBblPerDay)
-	p.tryAddingDataForSelector(petrol, "imports", Selector{"2248", ""}, crudeOilBblPerDay)
+	p.tryAddingDataForSelector(petrol, "production", Selector{"2245", "energy-refined-petroleum-products-production"}, crudeOilBblPerDay)
+	p.tryAddingDataForSelector(petrol, "consumption", Selector{"2246", "energy-refined-petroleum-products-consumption"}, crudeOilBblPerDay)
+	p.tryAddingDataForSelector(petrol, "exports", Selector{"2247", "energy-refined-petroleum-products-exports"}, crudeOilBblPerDay)
+	p.tryAddingDataForSelector(petrol, "imports", Selector{"2248", "energy-refined-petroleum-products-imports"}, crudeOilBblPerDay)
 	keys := petrol.Keys()
 	if len(keys) == 0 {
 		return petrol, NoValueErr
@@ -2837,11 +2840,11 @@ func (p *Page) refinedPetroleumProducts() (interface{}, error) {
 
 func (p *Page) naturalGas() (interface{}, error) {
 	gas := orderedmap.New()
-	p.tryAddingDataForSelector(gas, "production", Selector{"2249", ""}, naturalGasCuM)
-	p.tryAddingDataForSelector(gas, "consumption", Selector{"2250", ""}, naturalGasCuM)
-	p.tryAddingDataForSelector(gas, "exports", Selector{"2251", ""}, naturalGasCuM)
-	p.tryAddingDataForSelector(gas, "imports", Selector{"2252", ""}, naturalGasCuM)
-	p.tryAddingDataForSelector(gas, "proved_reserves", Selector{"2253", ""}, naturalGasCuM)
+	p.tryAddingDataForSelector(gas, "production", Selector{"2249", "energy-natural-gas-production"}, naturalGasCuM)
+	p.tryAddingDataForSelector(gas, "consumption", Selector{"2250", "energy-natural-gas-consumption"}, naturalGasCuM)
+	p.tryAddingDataForSelector(gas, "exports", Selector{"2251", "energy-natural-gas-exports"}, naturalGasCuM)
+	p.tryAddingDataForSelector(gas, "imports", Selector{"2252", "energy-natural-gas-imports"}, naturalGasCuM)
+	p.tryAddingDataForSelector(gas, "proved_reserves", Selector{"2253", "energy-natural-gas-proved-reserves"}, naturalGasCuM)
 	keys := gas.Keys()
 	if len(keys) == 0 {
 		return gas, NoValueErr
@@ -2859,9 +2862,9 @@ func carbonDioxideEmissions(value string) (interface{}, error) {
 
 func (p *Page) telephones() (interface{}, error) {
 	t := orderedmap.New()
-	p.tryAddingDataForSelector(t, "fixed_lines", Selector{"2150", ""}, telephonesFixedLines)
-	p.tryAddingDataForSelector(t, "mobile_cellular", Selector{"2151", ""}, telephonesMobileCellular)
-	p.tryAddingDataForSelector(t, "system", Selector{"2124", ""}, telephoneSystem)
+	p.tryAddingDataForSelector(t, "fixed_lines", Selector{"2150", "communications-telephones-fixed-lines"}, telephonesFixedLines)
+	p.tryAddingDataForSelector(t, "mobile_cellular", Selector{"2151", "communications-telephones-mobile-cellular"}, telephonesMobileCellular)
+	p.tryAddingDataForSelector(t, "system", Selector{"2124", "communications-telephone-system"}, telephoneSystem)
 	keys := t.Keys()
 	if len(keys) == 0 {
 		return t, NoValueErr
@@ -2900,9 +2903,9 @@ func televisionBroacastStations(value string) (interface{}, error) {
 
 func (p *Page) internet() (interface{}, error) {
 	i := orderedmap.New()
-	p.tryAddingDataForSelector(i, "country_code", Selector{"2154", ""}, internetCountryCode)
+	p.tryAddingDataForSelector(i, "country_code", Selector{"2154", "communications-internet-country-code"}, internetCountryCode)
 	p.tryAddingDataForSelector(i, "hosts", Selector{"2184", ""}, internetHosts)
-	p.tryAddingDataForSelector(i, "users", Selector{"2153", ""}, internetUsers)
+	p.tryAddingDataForSelector(i, "users", Selector{"2153", "communications-internet-users"}, internetUsers)
 	keys := i.Keys()
 	if len(keys) == 0 {
 		return i, NoValueErr
@@ -2928,10 +2931,10 @@ func communicationsNote(value string) (interface{}, error) {
 
 func (p *Page) airTransport() (interface{}, error) {
 	t := orderedmap.New()
-	p.tryAddingDataForSelector(t, "national_system", Selector{"2269", ""}, nationalAirTransportSystem)
-	p.tryAddingDataForSelector(t, "civil_aircraft_registration_country_code_prefix", Selector{"2270", ""}, civilAircraftRegistrationCountryCodePrefix)
+	p.tryAddingDataForSelector(t, "national_system", Selector{"2269", "transportation-national-air-transport-system"}, nationalAirTransportSystem)
+	p.tryAddingDataForSelector(t, "civil_aircraft_registration_country_code_prefix", Selector{"2270", "transportation-civil-aircraft-registration-country-code-prefix"}, civilAircraftRegistrationCountryCodePrefix)
 	tryAddingData(t, "airports", p.airports)
-	p.tryAddingDataForSelector(t, "heliports", Selector{"2019", ""}, heliports)
+	p.tryAddingDataForSelector(t, "heliports", Selector{"2019", "transportation-heliports"}, heliports)
 	keys := t.Keys()
 	if len(keys) == 0 {
 		return t, NoValueErr
@@ -2955,9 +2958,9 @@ func civilAircraftRegistrationCountryCodePrefix(value string) (interface{}, erro
 
 func (p *Page) airports() (interface{}, error) {
 	a := orderedmap.New()
-	p.tryAddingDataForSelector(a, "total", Selector{"2053", ""}, airportsTotal)
-	p.tryAddingDataForSelector(a, "paved", Selector{"2030", ""}, airportsRunways)
-	p.tryAddingDataForSelector(a, "unpaved", Selector{"2031", ""}, airportsRunways)
+	p.tryAddingDataForSelector(a, "total", Selector{"2053", "transportation-airports"}, airportsTotal)
+	p.tryAddingDataForSelector(a, "paved", Selector{"2030", "transportation-airports-with-paved-runways"}, airportsRunways)
+	p.tryAddingDataForSelector(a, "unpaved", Selector{"2031", "transportation-airports-with-unpaved-runways"}, airportsRunways)
 	keys := a.Keys()
 	if len(keys) == 0 {
 		return a, NoValueErr
@@ -2983,7 +2986,7 @@ func pipelines(value string) (interface{}, error) {
 	value, date, hasDate := stringWithoutDate(value)
 	p := orderedmap.New()
 	ps := []*orderedmap.OrderedMap{}
-	bits := strings.Split(value, "; ")
+	bits := splitByCommaOrSemicolon(value)
 	for _, bit := range bits {
 		o := orderedmap.New()
 		bit = strings.TrimSpace(bit)
@@ -2991,17 +2994,39 @@ func pipelines(value string) (interface{}, error) {
 		if len(b) < 3 {
 			continue
 		}
-		// type
-		pipeType := strings.Join(b[0:len(b)-2], " ")
-		o.Set("type", pipeType)
-		// length
-		length, err := stringToNumber(b[len(b)-2])
-		if err != nil {
+		// get type, length and units
+		pipeType := ""
+		units := ""
+		length := 0.0
+		hasParsedLength := false
+		lastItemWasLength := false
+		var err error
+		for _, thisBit := range b {
+			if !hasParsedLength {
+				length, err = stringToNumber(thisBit)
+				if err == nil {
+					hasParsedLength = true
+					lastItemWasLength = true
+				} else {
+					lastItemWasLength = false
+				}
+			} else {
+				if lastItemWasLength {
+					units = thisBit
+				} else {
+					pipeType = pipeType + " " + thisBit
+				}
+				lastItemWasLength = false
+			}
+		}
+		if !hasParsedLength {
 			continue
 		}
+		// type
+		o.Set("type", strings.TrimSpace(pipeType))
+		// length
 		o.Set("length", length)
 		// units
-		units := b[len(b)-1]
 		o.Set("units", units)
 		ps = append(ps, o)
 	}
