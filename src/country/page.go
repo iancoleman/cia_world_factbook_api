@@ -218,9 +218,9 @@ func (p *Page) people() (interface{}, error) {
 	tryAddingData(peopleData, "hiv_aids", p.hivAids)
 	p.tryAddingDataForSelector(peopleData, "major_infectious_diseases", Selector{"2193", ""}, majorInfectiousDiseases)
 	p.tryAddingDataForSelector(peopleData, "adult_obesity", Selector{"2228", "people-and-society-obesity-adult-prevalence-rate"}, obesityAdultPrevalenceRate)
-	p.tryAddingDataForSelector(peopleData, "underweight_children", Selector{"2224", ""}, childrenUnderFiveYearsUnderweight)
+	p.tryAddingDataForSelector(peopleData, "underweight_children", Selector{"2224", "people-and-society-children-under-the-age-of-5-years-underweight"}, childrenUnderFiveYearsUnderweight)
 	p.tryAddingDataForSelector(peopleData, "education_expenditures", Selector{"2206", "people-and-society-education-expenditures"}, educationExpenditures)
-	p.tryAddingDataForSelector(peopleData, "literacy", Selector{"2103", ""}, literacy)
+	p.tryAddingDataForSelector(peopleData, "literacy", Selector{"2103", "people-and-society-literacy"}, literacy)
 	p.tryAddingDataForSelector(peopleData, "school_life_expectancy", Selector{"2205", "people-and-society-school-life-expectancy-primary-to-tertiary-education"}, schoolLifeExpectancy)
 	p.tryAddingDataForSelector(peopleData, "child_labor", Selector{"2255", ""}, childLabor)
 	p.tryAddingDataForSelector(peopleData, "youth_unemployment", Selector{"2229", "people-and-society-unemployment-youth-ages-15-24"}, youthUnemployment)
@@ -275,7 +275,7 @@ func (p *Page) economy() (interface{}, error) {
 	p.tryAddingDataForSelector(economyData, "industrial_production_growth_rate", Selector{"2089", "economy-industrial-production-growth-rate"}, industrialProductionGrowthRate)
 	tryAddingData(economyData, "labor_force", p.laborForce)
 	p.tryAddingDataForSelector(economyData, "unemployment_rate", Selector{"2129", "economy-unemployment-rate"}, unemploymentRate)
-	p.tryAddingDataForSelector(economyData, "population_below_poverty_line", Selector{"2046", ""}, populationBelowPovertyLine)
+	p.tryAddingDataForSelector(economyData, "population_below_poverty_line", Selector{"2046", "economy-population-below-poverty-line"}, populationBelowPovertyLine)
 	p.tryAddingDataForSelector(economyData, "household_income_by_percentage_share", Selector{"2047", "economy-household-income-or-consumption-by-percentage-share"}, householdIncomeByPercentageShare)
 	p.tryAddingDataForSelector(economyData, "distribution_of_family_income", Selector{"2172", "economy-distribution-of-family-income-gini-index"}, distributionOfFamilyIncome)
 	p.tryAddingDataForSelector(economyData, "investment_gross_fixed", Selector{"2185", ""}, investmentGrossFixed)
@@ -365,11 +365,13 @@ func (p *Page) militaryAndSecurity() (interface{}, error) {
 	return militaryData, nil
 }
 
+// TODO new terrorism section, will need an api version change
+
 func (p *Page) transnationalIssues() (interface{}, error) {
 	issuesData := orderedmap.New()
 	p.tryAddingDataForSelector(issuesData, "disputes", Selector{"2070", "transnational-issues-disputes-international"}, disputes)
 	p.tryAddingDataForSelector(issuesData, "refugees_and_iternally_displaced_persons", Selector{"2194", "transnational-issues-refugees-and-internally-displaced-persons"}, refugees)
-	p.tryAddingDataForSelector(issuesData, "trafficking_in_persons", Selector{"2196", ""}, traffickingInPersons)
+	p.tryAddingDataForSelector(issuesData, "trafficking_in_persons", Selector{"2196", "transnational-issues-trafficking-in-persons"}, traffickingInPersons)
 	p.tryAddingDataForSelector(issuesData, "illicit_drugs", Selector{"2086", "transnational-issues-illicit-drugs"}, illicitDrugs)
 	if len(issuesData.Keys()) == 0 {
 		return issuesData, NoValueErr
@@ -789,7 +791,7 @@ func (p *Page) environment() (interface{}, error) {
 	// combination of two field keys - current issues and international agreements
 	o := orderedmap.New()
 	// current issues
-	currentIssues, err := textForSelector(p.dom, Selector{"2032", ""})
+	currentIssues, err := textForSelector(p.dom, Selector{"2032", "geography-environment-current-issues"})
 	if err == nil {
 		// see The World
 		a := "pollution (air, water, acid rain, toxic substances)"
@@ -808,7 +810,7 @@ func (p *Page) environment() (interface{}, error) {
 		}
 	}
 	// international agreements
-	internationalAgreements, err := textForSelector(p.dom, Selector{"2033", ""})
+	internationalAgreements, err := textForSelector(p.dom, Selector{"2033", "geography-environment-international-agreements"})
 	if err == nil {
 		agreementsMap, err := stringToMap(internationalAgreements)
 		if err == nil {
@@ -1228,7 +1230,7 @@ func (p *Page) hivAids() (interface{}, error) {
 	// contains three field keys
 	o := orderedmap.New()
 	// adult prevalence rate
-	rateStr, err := textForSelector(p.dom, Selector{"2155", ""})
+	rateStr, err := textForSelector(p.dom, Selector{"2155", "people-and-society-hiv-aids-adult-prevalence-rate"})
 	if err == nil {
 		rate, err := stringToNumberWithGlobalRankAndDate(rateStr, "percent_of_adults")
 		if err == nil {
@@ -1236,7 +1238,7 @@ func (p *Page) hivAids() (interface{}, error) {
 		}
 	}
 	// people living with hiv aids
-	livingStr, err := textForSelector(p.dom, Selector{"2156", ""})
+	livingStr, err := textForSelector(p.dom, Selector{"2156", "people-and-society-hiv-aids-people-living-with-hiv-aids"})
 	if err == nil {
 		living, err := stringToNumberWithGlobalRankAndDate(livingStr, "total")
 		if err == nil {
@@ -1244,7 +1246,7 @@ func (p *Page) hivAids() (interface{}, error) {
 		}
 	}
 	// deaths
-	deathsStr, err := textForSelector(p.dom, Selector{"2157", ""})
+	deathsStr, err := textForSelector(p.dom, Selector{"2157", "people-and-society-hiv-aids-deaths"})
 	if err == nil {
 		deaths, err := stringToNumberWithGlobalRankAndDate(deathsStr, "total")
 		if err == nil {
@@ -2070,7 +2072,7 @@ func (p *Page) diplomaticRepresentation() (interface{}, error) {
 	// contains two field keys
 	o := orderedmap.New()
 	// in the US
-	diplomatInUs, err := textForSelector(p.dom, Selector{"2149", ""})
+	diplomatInUs, err := textForSelector(p.dom, Selector{"2149", "government-diplomatic-representation-in-the-us"})
 	if err == nil {
 		person, err := stringToDiplomat(diplomatInUs)
 		if err == nil {
@@ -2078,7 +2080,7 @@ func (p *Page) diplomaticRepresentation() (interface{}, error) {
 		}
 	}
 	// from the US
-	diplomatFromUs, err := textForSelector(p.dom, Selector{"2007", ""})
+	diplomatFromUs, err := textForSelector(p.dom, Selector{"2007", "government-diplomatic-representation-from-the-us"})
 	if err == nil {
 		person, err := stringToDiplomat(diplomatFromUs)
 		if err == nil {
@@ -2198,7 +2200,7 @@ func nationalSymbol(value string) (interface{}, error) {
 }
 
 func (p *Page) nationalAnthem() (interface{}, error) {
-	anthemStr, err := textForSelector(p.dom, Selector{"2218", ""})
+	anthemStr, err := textForSelector(p.dom, Selector{"2218", "government-national-anthem"})
 	if err != nil {
 		return anthemStr, err
 	}
@@ -2225,10 +2227,10 @@ func economyOverview(value string) (interface{}, error) {
 func (p *Page) gdp() (interface{}, error) {
 	// includes six fields
 	gdp := orderedmap.New()
-	p.tryAddingDataForSelector(gdp, "purchasing_power_parity", Selector{"2001", ""}, gdpPpp)
-	p.tryAddingDataForSelector(gdp, "official_exchange_rate", Selector{"2195", ""}, gdpOfficialExchangeRate)
-	p.tryAddingDataForSelector(gdp, "real_growth_rate", Selector{"2003", ""}, gdpRealGrowthRate)
-	p.tryAddingDataForSelector(gdp, "per_capita_purchasing_power_parity", Selector{"2004", ""}, gdpPerCapitaPpp)
+	p.tryAddingDataForSelector(gdp, "purchasing_power_parity", Selector{"2001", "economy-gdp-purchasing-power-parity"}, gdpPpp)
+	p.tryAddingDataForSelector(gdp, "official_exchange_rate", Selector{"2195", "economy-gdp-official-exchange-rate"}, gdpOfficialExchangeRate)
+	p.tryAddingDataForSelector(gdp, "real_growth_rate", Selector{"2003", "economy-gdp-real-growth-rate"}, gdpRealGrowthRate)
+	p.tryAddingDataForSelector(gdp, "per_capita_purchasing_power_parity", Selector{"2004", "economy-gdp-per-capita-ppp"}, gdpPerCapitaPpp)
 	tryAddingData(gdp, "composition", p.gdpComposition)
 	keys := gdp.Keys()
 	if len(keys) == 0 {
@@ -2259,8 +2261,8 @@ func grossNationalSaving(value string) (interface{}, error) {
 
 func (p *Page) gdpComposition() (interface{}, error) {
 	composition := orderedmap.New()
-	p.tryAddingDataForSelector(composition, "by_end_use", Selector{"2259", ""}, gdpCompositionByEndUse)
-	p.tryAddingDataForSelector(composition, "by_sector_of_origin", Selector{"2012", ""}, gdpCompositionBySector)
+	p.tryAddingDataForSelector(composition, "by_end_use", Selector{"2259", "economy-gdp-composition-by-end-use"}, gdpCompositionByEndUse)
+	p.tryAddingDataForSelector(composition, "by_sector_of_origin", Selector{"2012", "economy-gdp-composition-by-sector-of-origin"}, gdpCompositionBySector)
 	keys := composition.Keys()
 	if len(keys) == 0 {
 		return composition, NoValueErr
@@ -2454,8 +2456,8 @@ func industrialProductionGrowthRate(value string) (interface{}, error) {
 
 func (p *Page) laborForce() (interface{}, error) {
 	force := orderedmap.New()
-	p.tryAddingDataForSelector(force, "total_size", Selector{"2095", ""}, laborForceTotal)
-	p.tryAddingDataForSelector(force, "by_occupation", Selector{"2048", ""}, laborForceByOccupation)
+	p.tryAddingDataForSelector(force, "total_size", Selector{"2095", "economy-labor-force"}, laborForceTotal)
+	p.tryAddingDataForSelector(force, "by_occupation", Selector{"2048", "economy-labor-force-by-occupation"}, laborForceByOccupation)
 	keys := force.Keys()
 	if len(keys) == 0 {
 		return force, NoValueErr
@@ -2599,9 +2601,9 @@ func currentAccountBalance(value string) (interface{}, error) {
 
 func (p *Page) exports() (interface{}, error) {
 	exports := orderedmap.New()
-	p.tryAddingDataForSelector(exports, "total_value", Selector{"2078", ""}, importExportsTotalValue)
-	p.tryAddingDataForSelector(exports, "commodities", Selector{"2049", ""}, importExportsCommodities)
-	p.tryAddingDataForSelector(exports, "partners", Selector{"2050", ""}, importExportsPartners)
+	p.tryAddingDataForSelector(exports, "total_value", Selector{"2078", "economy-exports"}, importExportsTotalValue)
+	p.tryAddingDataForSelector(exports, "commodities", Selector{"2049", "economy-exports-commodities"}, importExportsCommodities)
+	p.tryAddingDataForSelector(exports, "partners", Selector{"2050", "economy-exports-partners"}, importExportsPartners)
 	keys := exports.Keys()
 	if len(keys) == 0 {
 		return exports, NoValueErr
@@ -2611,18 +2613,18 @@ func (p *Page) exports() (interface{}, error) {
 
 func (p *Page) imports() (interface{}, error) {
 	exports := orderedmap.New()
-	p.tryAddingDataForSelector(exports, "total_value", Selector{"2087", ""}, importExportsTotalValue)
+	p.tryAddingDataForSelector(exports, "total_value", Selector{"2087", "economy-imports"}, importExportsTotalValue)
 	// import commodities may be same as list of exorts, detect that here
-	value, err := textForSelector(p.dom, Selector{"2058", ""})
+	value, err := textForSelector(p.dom, Selector{"2058", "economy-imports-commodities"})
 	if err == nil {
 		isSameAsExports := strings.Index(value, "see listing for exports") > -1
 		if isSameAsExports {
-			p.tryAddingDataForSelector(exports, "commodities", Selector{"2049", ""}, importExportsCommodities)
+			p.tryAddingDataForSelector(exports, "commodities", Selector{"2049", "economy-exports-commodities"}, importExportsCommodities)
 		} else {
-			p.tryAddingDataForSelector(exports, "commodities", Selector{"2058", ""}, importExportsCommodities)
+			p.tryAddingDataForSelector(exports, "commodities", Selector{"2058", "economy-imports-commodities"}, importExportsCommodities)
 		}
 	}
-	p.tryAddingDataForSelector(exports, "partners", Selector{"2061", ""}, importExportsPartners)
+	p.tryAddingDataForSelector(exports, "partners", Selector{"2061", "economy-imports-partners"}, importExportsPartners)
 	keys := exports.Keys()
 	if len(keys) == 0 {
 		return exports, NoValueErr
@@ -2702,8 +2704,8 @@ func externalDebt(value string) (interface{}, error) {
 
 func (p *Page) stockOfDirectForeignInvestment() (interface{}, error) {
 	stock := orderedmap.New()
-	p.tryAddingDataForSelector(stock, "at_home", Selector{"2198", ""}, stockOfDirectForeignInvestmentAtHome)
-	p.tryAddingDataForSelector(stock, "abroad", Selector{"2199", ""}, stockOfDirectForeignInvestmentAbroad)
+	p.tryAddingDataForSelector(stock, "at_home", Selector{"2198", "economy-stock-of-direct-foreign-investment-at-home"}, stockOfDirectForeignInvestmentAtHome)
+	p.tryAddingDataForSelector(stock, "abroad", Selector{"2199", "economy-stock-of-direct-foreign-investment-abroad"}, stockOfDirectForeignInvestmentAbroad)
 	keys := stock.Keys()
 	if len(keys) == 0 {
 		return stock, NoValueErr
