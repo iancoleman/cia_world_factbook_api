@@ -85,6 +85,7 @@ func (p *Page) parse() error {
 	tryAddingData(pageData, "communications", p.communications)
 	tryAddingData(pageData, "transportation", p.transportation)
 	tryAddingData(pageData, "military_and_security", p.militaryAndSecurity)
+	tryAddingData(pageData, "terrorism", p.terrorism)
 	tryAddingData(pageData, "transnational_issues", p.transnationalIssues)
 	d := orderedmap.New()
 	d.Set("data", pageData)
@@ -150,7 +151,7 @@ func (p *Page) tryAddingDataForSelector(d *orderedmap.OrderedMap, key string, se
 func (p *Page) introduction() (interface{}, error) {
 	introData := orderedmap.New()
 	p.tryAddingDataForSelector(introData, "background", Selector{"2028", "introduction-background"}, introBackground)
-	p.tryAddingDataForSelector(introData, "preliminary_statement", Selector{"2192", ""}, preliminaryStatement)
+	p.tryAddingDataForSelector(introData, "preliminary_statement", Selector{"2192", "introduction-preliminary-statement"}, preliminaryStatement)
 	if len(introData.Keys()) == 0 {
 		return introData, NoValueErr
 	}
@@ -159,7 +160,7 @@ func (p *Page) introduction() (interface{}, error) {
 
 func (p *Page) geography() (interface{}, error) {
 	geoData := orderedmap.New()
-	p.tryAddingDataForSelector(geoData, "overview", Selector{"2203", ""}, geographicOverview)
+	p.tryAddingDataForSelector(geoData, "overview", Selector{"2203", "geography-geographic-overview"}, geographicOverview)
 	p.tryAddingDataForSelector(geoData, "location", Selector{"2144", "geography-location"}, geographyLocation)
 	p.tryAddingDataForSelector(geoData, "geographic_coordinates", Selector{"2011", "geography-geographic-coordinates"}, geographicCoordinates)
 	p.tryAddingDataForSelector(geoData, "map_references", Selector{"2145", "geography-map-references"}, mapReferences)
@@ -173,8 +174,8 @@ func (p *Page) geography() (interface{}, error) {
 	p.tryAddingDataForSelector(geoData, "natural_resources", Selector{"2111", "geography-natural-resources"}, naturalResources)
 	p.tryAddingDataForSelector(geoData, "land_use", Selector{"2097", "geography-land-use"}, landUse)
 	p.tryAddingDataForSelector(geoData, "irrigated_land", Selector{"2146", "geography-irrigated-land"}, irrigatedLand)
-	p.tryAddingDataForSelector(geoData, "total_renewable_water_sources", Selector{"2201", ""}, totalRenewableWaterSources)
-	p.tryAddingDataForSelector(geoData, "freshwater_withdrawal", Selector{"2202", ""}, freshwaterWithdrawal)
+	p.tryAddingDataForSelector(geoData, "total_renewable_water_sources", Selector{"2201", ""}, totalRenewableWaterSources) // deprecated before id selectors came into use
+	p.tryAddingDataForSelector(geoData, "freshwater_withdrawal", Selector{"2202", ""}, freshwaterWithdrawal)               // deprecated before id selectors came into use
 	p.tryAddingDataForSelector(geoData, "population_distribution", Selector{"2266", "geography-population-distribution"}, populationDistribution)
 	p.tryAddingDataForSelector(geoData, "natural_hazards", Selector{"2021", "geography-natural-hazards"}, naturalHazards)
 	tryAddingData(geoData, "environment", p.environment)
@@ -192,7 +193,7 @@ func (p *Page) people() (interface{}, error) {
 	p.tryAddingDataForSelector(peopleData, "ethnic_groups", Selector{"2075", "people-and-society-ethnic-groups"}, ethnicGroups)
 	p.tryAddingDataForSelector(peopleData, "languages", Selector{"2098", "people-and-society-languages"}, languages)
 	p.tryAddingDataForSelector(peopleData, "religions", Selector{"2122", "people-and-society-religions"}, religions)
-	p.tryAddingDataForSelector(peopleData, "demographic_profile", Selector{"2257", ""}, demographicProfile)
+	p.tryAddingDataForSelector(peopleData, "demographic_profile", Selector{"2257", "people-and-society-demographic-profile"}, demographicProfile)
 	p.tryAddingDataForSelector(peopleData, "age_structure", Selector{"2010", "people-and-society-age-structure"}, ageStructure)
 	p.tryAddingDataForSelector(peopleData, "dependency_ratios", Selector{"2261", "people-and-society-dependency-ratios"}, dependencyRatios)
 	p.tryAddingDataForSelector(peopleData, "median_age", Selector{"2177", "people-and-society-median-age"}, medianAge)
@@ -216,15 +217,15 @@ func (p *Page) people() (interface{}, error) {
 	p.tryAddingDataForSelector(peopleData, "drinking_water_source", Selector{"2216", "people-and-society-drinking-water-source"}, drinkingWaterSource)
 	p.tryAddingDataForSelector(peopleData, "sanitation_facility_access", Selector{"2217", "people-and-society-sanitation-facility-access"}, sanitationFacilityAccess)
 	tryAddingData(peopleData, "hiv_aids", p.hivAids)
-	p.tryAddingDataForSelector(peopleData, "major_infectious_diseases", Selector{"2193", ""}, majorInfectiousDiseases)
+	p.tryAddingDataForSelector(peopleData, "major_infectious_diseases", Selector{"2193", "people-and-society-major-infectious-diseases"}, majorInfectiousDiseases)
 	p.tryAddingDataForSelector(peopleData, "adult_obesity", Selector{"2228", "people-and-society-obesity-adult-prevalence-rate"}, obesityAdultPrevalenceRate)
 	p.tryAddingDataForSelector(peopleData, "underweight_children", Selector{"2224", "people-and-society-children-under-the-age-of-5-years-underweight"}, childrenUnderFiveYearsUnderweight)
 	p.tryAddingDataForSelector(peopleData, "education_expenditures", Selector{"2206", "people-and-society-education-expenditures"}, educationExpenditures)
 	p.tryAddingDataForSelector(peopleData, "literacy", Selector{"2103", "people-and-society-literacy"}, literacy)
 	p.tryAddingDataForSelector(peopleData, "school_life_expectancy", Selector{"2205", "people-and-society-school-life-expectancy-primary-to-tertiary-education"}, schoolLifeExpectancy)
-	p.tryAddingDataForSelector(peopleData, "child_labor", Selector{"2255", ""}, childLabor)
+	p.tryAddingDataForSelector(peopleData, "child_labor", Selector{"2255", ""}, childLabor) // deprecated before id selectors came into use
 	p.tryAddingDataForSelector(peopleData, "youth_unemployment", Selector{"2229", "people-and-society-unemployment-youth-ages-15-24"}, youthUnemployment)
-	p.tryAddingDataForSelector(peopleData, "note", Selector{"2022", ""}, peopleNote)
+	p.tryAddingDataForSelector(peopleData, "note", Selector{"2022", "people-and-society-people-note"}, peopleNote)
 	if len(peopleData.Keys()) == 0 {
 		return peopleData, NoValueErr
 	}
@@ -234,11 +235,11 @@ func (p *Page) people() (interface{}, error) {
 func (p *Page) government() (interface{}, error) {
 	governmentData := orderedmap.New()
 	p.tryAddingDataForSelector(governmentData, "country_name", Selector{"2142", "government-country-name"}, countryName)
-	p.tryAddingDataForSelector(governmentData, "union_name", Selector{"2189", ""}, unionName)
-	p.tryAddingDataForSelector(governmentData, "political_structure", Selector{"2190", ""}, politicalStructure)
+	p.tryAddingDataForSelector(governmentData, "union_name", Selector{"2189", "government-union-name"}, unionName)
+	p.tryAddingDataForSelector(governmentData, "political_structure", Selector{"2190", "government-political-structure"}, politicalStructure)
 	p.tryAddingDataForSelector(governmentData, "government_type", Selector{"2128", "government-government-type"}, governmentType)
 	p.tryAddingDataForSelector(governmentData, "capital", Selector{"2057", "government-capital"}, capital)
-	p.tryAddingDataForSelector(governmentData, "member_states", Selector{"2191", ""}, memberStates)
+	p.tryAddingDataForSelector(governmentData, "member_states", Selector{"2191", "government-member-states"}, memberStates)
 	p.tryAddingDataForSelector(governmentData, "administrative_divisions", Selector{"2051", "government-administrative-divisions"}, administrativeDivisions)
 	p.tryAddingDataForSelector(governmentData, "dependent_areas", Selector{"2068", "government-dependent-areas"}, dependentAreas)
 	p.tryAddingDataForSelector(governmentData, "independence", Selector{"2088", "government-independence"}, independence)
@@ -252,13 +253,13 @@ func (p *Page) government() (interface{}, error) {
 	p.tryAddingDataForSelector(governmentData, "legislative_branch", Selector{"2101", "government-legislative-branch"}, legislativeBranch)
 	p.tryAddingDataForSelector(governmentData, "judicial_branch", Selector{"2094", "government-judicial-branch"}, judicialBranch)
 	p.tryAddingDataForSelector(governmentData, "political_parties_and_leaders", Selector{"2118", "government-political-parties-and-leaders"}, politicalPartiesAndLeaders)
-	p.tryAddingDataForSelector(governmentData, "political_pressure_groups_and_leaders", Selector{"2115", ""}, politicalPressureGroupsAndLeaders)
+	p.tryAddingDataForSelector(governmentData, "political_pressure_groups_and_leaders", Selector{"2115", ""}, politicalPressureGroupsAndLeaders) // deprecated before id selectors came into use
 	p.tryAddingDataForSelector(governmentData, "international_organization_participation", Selector{"2107", "government-international-organization-participation"}, internationalOrganizationParticipation)
 	tryAddingData(governmentData, "diplomatic_representation", p.diplomaticRepresentation)
 	p.tryAddingDataForSelector(governmentData, "flag_description", Selector{"2081", "government-flag-description"}, flagDescription)
 	p.tryAddingDataForSelector(governmentData, "national_symbol", Selector{"2230", "government-national-symbol-s"}, nationalSymbol)
 	tryAddingData(governmentData, "national_anthem", p.nationalAnthem)
-	p.tryAddingDataForSelector(governmentData, "note", Selector{"2140", ""}, governmentNote)
+	p.tryAddingDataForSelector(governmentData, "note", Selector{"2140", "government-government-note"}, governmentNote)
 	if len(governmentData.Keys()) == 0 {
 		return governmentData, NoValueErr
 	}
@@ -278,7 +279,7 @@ func (p *Page) economy() (interface{}, error) {
 	p.tryAddingDataForSelector(economyData, "population_below_poverty_line", Selector{"2046", "economy-population-below-poverty-line"}, populationBelowPovertyLine)
 	p.tryAddingDataForSelector(economyData, "household_income_by_percentage_share", Selector{"2047", "economy-household-income-or-consumption-by-percentage-share"}, householdIncomeByPercentageShare)
 	p.tryAddingDataForSelector(economyData, "distribution_of_family_income", Selector{"2172", "economy-distribution-of-family-income-gini-index"}, distributionOfFamilyIncome)
-	p.tryAddingDataForSelector(economyData, "investment_gross_fixed", Selector{"2185", ""}, investmentGrossFixed)
+	p.tryAddingDataForSelector(economyData, "investment_gross_fixed", Selector{"2185", ""}, investmentGrossFixed) // deprecated before id selectors came into use
 	p.tryAddingDataForSelector(economyData, "budget", Selector{"2056", "economy-budget"}, budget)
 	p.tryAddingDataForSelector(economyData, "taxes_and_other_revenues", Selector{"2221", "economy-taxes-and-other-revenues"}, taxesAndOtherRevenues)
 	p.tryAddingDataForSelector(economyData, "budget_surplus_or_deficit", Selector{"2222", "economy-budget-surplus-or-deficit"}, budgetSurplusOrDeficit)
@@ -287,8 +288,8 @@ func (p *Page) economy() (interface{}, error) {
 	p.tryAddingDataForSelector(economyData, "inflation_rate", Selector{"2092", "economy-inflation-rate-consumer-prices"}, inflationRate)
 	p.tryAddingDataForSelector(economyData, "central_bank_discount_rate", Selector{"2207", "economy-central-bank-discount-rate"}, centralBankDiscountRate)
 	p.tryAddingDataForSelector(economyData, "commercial_bank_prime_lending_rate", Selector{"2208", "economy-commercial-bank-prime-lending-rate"}, commercialBankPrimeLendingRate)
-	p.tryAddingDataForSelector(economyData, "stock_of_money", Selector{"2209", ""}, stockOfMoney)
-	p.tryAddingDataForSelector(economyData, "stock_of_quasi_money", Selector{"2210", ""}, stockOfQuasiMoney)
+	p.tryAddingDataForSelector(economyData, "stock_of_money", Selector{"2209", ""}, stockOfMoney)            // deprecated before id selectors came into use
+	p.tryAddingDataForSelector(economyData, "stock_of_quasi_money", Selector{"2210", ""}, stockOfQuasiMoney) // deprecated before id selectors came into use
 	p.tryAddingDataForSelector(economyData, "stock_of_narrow_money", Selector{"2214", "economy-stock-of-narrow-money"}, stockOfNarrowMoney)
 	p.tryAddingDataForSelector(economyData, "stock_of_broad_money", Selector{"2215", "economy-stock-of-broad-money"}, stockOfBroadMoney)
 	p.tryAddingDataForSelector(economyData, "stock_of_domestic_credit", Selector{"2211", "economy-stock-of-domestic-credit"}, stockOfDomesticCredit)
@@ -324,10 +325,10 @@ func (p *Page) communications() (interface{}, error) {
 	commsData := orderedmap.New()
 	tryAddingData(commsData, "telephones", p.telephones)
 	p.tryAddingDataForSelector(commsData, "broadcast_media", Selector{"2213", "communications-broadcast-media"}, broadcastMedia)
-	p.tryAddingDataForSelector(commsData, "radio_broadcast_stations", Selector{"2013", ""}, radioBroacastStations)
-	p.tryAddingDataForSelector(commsData, "television_broadcast_stations", Selector{"2015", ""}, televisionBroacastStations)
+	p.tryAddingDataForSelector(commsData, "radio_broadcast_stations", Selector{"2013", ""}, radioBroacastStations)           // deprecated before id selectors came into use
+	p.tryAddingDataForSelector(commsData, "television_broadcast_stations", Selector{"2015", ""}, televisionBroacastStations) // deprecated before id selectors came into use
 	tryAddingData(commsData, "internet", p.internet)
-	p.tryAddingDataForSelector(commsData, "note", Selector{"2138", ""}, communicationsNote)
+	p.tryAddingDataForSelector(commsData, "note", Selector{"2138", "communications-communications-note"}, communicationsNote)
 	if len(commsData.Keys()) == 0 {
 		return commsData, NoValueErr
 	}
@@ -343,8 +344,8 @@ func (p *Page) transportation() (interface{}, error) {
 	p.tryAddingDataForSelector(transportData, "waterways", Selector{"2093", "transportation-waterways"}, waterways)
 	p.tryAddingDataForSelector(transportData, "merchant_marine", Selector{"2108", "transportation-merchant-marine"}, merchantMarine)
 	p.tryAddingDataForSelector(transportData, "ports_and_terminals", Selector{"2120", "transportation-ports-and-terminals"}, portsAndTerminals)
-	p.tryAddingDataForSelector(transportData, "shipyards_and_ship_building", Selector{"2231", ""}, shipyardsAndShipBuilding)
-	p.tryAddingDataForSelector(transportData, "note", Selector{"2008", ""}, transportNote)
+	p.tryAddingDataForSelector(transportData, "shipyards_and_ship_building", Selector{"2231", ""}, shipyardsAndShipBuilding) // deprecated before id selectors came into use
+	p.tryAddingDataForSelector(transportData, "note", Selector{"2008", "transportation-transportation-note"}, transportNote)
 	if len(transportData.Keys()) == 0 {
 		return transportData, NoValueErr
 	}
@@ -357,15 +358,23 @@ func (p *Page) militaryAndSecurity() (interface{}, error) {
 	p.tryAddingDataForSelector(militaryData, "branches", Selector{"2055", "military-and-security-military-branches"}, militaryBranches)
 	tryAddingData(militaryData, "manpower", p.militaryManpower)
 	p.tryAddingDataForSelector(militaryData, "service_age_and_obligation", Selector{"2024", "military-and-security-military-service-age-and-obligation"}, militaryServiceAgeAndObligation)
-	p.tryAddingDataForSelector(militaryData, "terrorist_groups", Selector{"2265", ""}, terroristGroups)
-	p.tryAddingDataForSelector(militaryData, "note", Selector{"2137", ""}, militaryNote)
+	p.tryAddingDataForSelector(militaryData, "terrorist_groups", Selector{"2265", ""}, terroristGroups) // moved into own terrorism section
+	p.tryAddingDataForSelector(militaryData, "note", Selector{"2137", "military-and-security-military-note"}, militaryNote)
 	if len(militaryData.Keys()) == 0 {
 		return militaryData, NoValueErr
 	}
 	return militaryData, nil
 }
 
-// TODO new terrorism section, will need an api version change
+func (p *Page) terrorism() (interface{}, error) {
+	terrorismData := orderedmap.New()
+	p.tryAddingDataForSelector(terrorismData, "home_based", Selector{"", "terrorism-terrorist-groups-home-based"}, terrorismHomeBased)          // came after fieldid selectors were in use
+	p.tryAddingDataForSelector(terrorismData, "foreign_based", Selector{"", "terrorism-terrorist-groups-foreign-based"}, terrorismForeignBased) // came after fieldid selectors were in use
+	if len(terrorismData.Keys()) == 0 {
+		return terrorismData, NoValueErr
+	}
+	return terrorismData, nil
+}
 
 func (p *Page) transnationalIssues() (interface{}, error) {
 	issuesData := orderedmap.New()
@@ -2906,7 +2915,7 @@ func televisionBroacastStations(value string) (interface{}, error) {
 func (p *Page) internet() (interface{}, error) {
 	i := orderedmap.New()
 	p.tryAddingDataForSelector(i, "country_code", Selector{"2154", "communications-internet-country-code"}, internetCountryCode)
-	p.tryAddingDataForSelector(i, "hosts", Selector{"2184", ""}, internetHosts)
+	p.tryAddingDataForSelector(i, "hosts", Selector{"2184", ""}, internetHosts) // deprecated before id selectors came into use
 	p.tryAddingDataForSelector(i, "users", Selector{"2153", "communications-internet-users"}, internetUsers)
 	keys := i.Keys()
 	if len(keys) == 0 {
@@ -3318,9 +3327,9 @@ func militaryBranches(value string) (interface{}, error) {
 
 func (p *Page) militaryManpower() (interface{}, error) {
 	manpower := orderedmap.New()
-	p.tryAddingDataForSelector(manpower, "available_for_military_service", Selector{"2105", ""}, manpowerNumbers)
-	p.tryAddingDataForSelector(manpower, "fit_for_military_service", Selector{"2025", ""}, manpowerNumbers)
-	p.tryAddingDataForSelector(manpower, "reaching_militarily_significant_age_annually", Selector{"2026", ""}, manpowerNumbers)
+	p.tryAddingDataForSelector(manpower, "available_for_military_service", Selector{"2105", ""}, manpowerNumbers)               // deprecated before id selectors came into use
+	p.tryAddingDataForSelector(manpower, "fit_for_military_service", Selector{"2025", ""}, manpowerNumbers)                     // deprecated before id selectors came into use
+	p.tryAddingDataForSelector(manpower, "reaching_militarily_significant_age_annually", Selector{"2026", ""}, manpowerNumbers) // deprecated before id selectors came into use
 	keys := manpower.Keys()
 	if len(keys) == 0 {
 		return manpower, NoValueErr
@@ -3356,6 +3365,16 @@ func terroristGroups(value string) (interface{}, error) {
 }
 
 func militaryNote(value string) (interface{}, error) {
+	return value, nil
+}
+
+// TODO consider parsing into a list
+func terrorismHomeBased(value string) (interface{}, error) {
+	return value, nil
+}
+
+// TODO consider parsing into a list
+func terrorismForeignBased(value string) (interface{}, error) {
 	return value, nil
 }
 
