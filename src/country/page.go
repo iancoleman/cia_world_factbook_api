@@ -1529,7 +1529,9 @@ func administrativeDivisions(value string) (interface{}, error) {
 		// get type name
 		typeNameIndex := strings.Count(name, "*")
 		typeName := ""
-		typeName = typeNames[typeNameIndex]
+		if len(typeNames) < typeNameIndex {
+			typeName = typeNames[typeNameIndex]
+		}
 		// set name
 		name = strings.Replace(name, "*", "", -1)
 		n.Set("name", name)
