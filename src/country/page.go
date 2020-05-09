@@ -1475,6 +1475,8 @@ func administrativeDivisions(value string) (interface{}, error) {
 	if strings.Index(value, "none") == 0 {
 		return value, NoValueErr
 	}
+	// pk.html
+	value = strings.Replace(value, "no first order administrative divisions", "", -1)
 	// si.html
 	value = strings.Replace(value, ") Ajdovscina", "); Ajdovscina", -1)
 	// mv.html
@@ -1507,7 +1509,7 @@ func administrativeDivisions(value string) (interface{}, error) {
 			if typeStr == "and" {
 				continue
 			}
-			if len(typeNames) == typeIndex {
+			for len(typeNames) <= typeIndex {
 				typeNames = append(typeNames, "")
 			}
 			typeNames[typeIndex] = typeNames[typeIndex] + " " + typeStr
