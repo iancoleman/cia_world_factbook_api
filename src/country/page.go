@@ -548,6 +548,7 @@ func coastline(value string) (interface{}, error) {
 	if err != nil {
 		return o, err
 	}
+	others = strings.Replace(others, "- note", "note", -1)
 	m, err := stringToMap(others)
 	if err == nil {
 		keys := m.Keys()
