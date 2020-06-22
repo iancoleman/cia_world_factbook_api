@@ -1294,6 +1294,7 @@ func stringToListWithItemNotes(s, itemKey, noteKey string) ([]*orderedmap.Ordere
 	o := []*orderedmap.OrderedMap{}
 	bits := strings.Split(s, ", ")
 	for _, bit := range bits {
+		bit, date, hasDate := stringWithoutDate(bit)
 		bit, ps := removeParenthesis(bit)
 		item := orderedmap.New()
 		// name
@@ -1315,6 +1316,10 @@ func stringToListWithItemNotes(s, itemKey, noteKey string) ([]*orderedmap.Ordere
 			} else {
 				item.Set(noteKey, note)
 			}
+		}
+		// date
+		if hasDate {
+			item.Set("date", date)
 		}
 		o = append(o, item)
 	}

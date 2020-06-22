@@ -3390,6 +3390,7 @@ func disputes(value string) (interface{}, error) {
 func refugees(value string) (interface{}, error) {
 	value = strings.Replace(value, " (country of origin)", "", -1)
 	value = strings.Replace(value, "IDPs", "internally_displaced_persons", -1)
+	value = strings.Replace(value, ");", "),", -1)
 	o, err := stringToMap(value)
 	if err != nil {
 		return o, err
@@ -3399,16 +3400,12 @@ func refugees(value string) (interface{}, error) {
 		vInterface, _ := o.Get(key)
 		v := vInterface.(string)
 		if key == "refugees" {
-			v, date, hasDate := stringWithoutDate(v)
 			byCountry, err := stringToListWithItemNotes(v, "people", "country_of_origin")
 			if err != nil {
 				continue
 			}
 			m := orderedmap.New()
 			m.Set("by_country", byCountry)
-			if hasDate {
-				m.Set("date", date)
-			}
 			o.Set(key, m)
 		} else if key == "internally_displaced_persons" {
 			m := orderedmap.New()
