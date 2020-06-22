@@ -1062,7 +1062,7 @@ func majorUrbanAreas(value string) (interface{}, error) {
 		s, ps := removeParenthesis(bit)
 		// get place name
 		placeStr := ""
-		placeBits := strings.Split(s, " ")
+		placeBits := strings.Fields(s)
 		populationStr := ""
 		for _, placeBit := range placeBits {
 			if startsWithNumber(placeBit) {
