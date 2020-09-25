@@ -15,7 +15,7 @@ import (
 // Expects html files in dirs pages/YYYY-MM-DD/*.html
 func main() {
 	// prepare for concurrent parsing
-	numCpus := runtime.NumCPU()
+	numCpus := runtime.NumCPU()-1
 	runtime.GOMAXPROCS(numCpus)
 	var wg sync.WaitGroup
 	// read config
