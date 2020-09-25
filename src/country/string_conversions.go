@@ -1290,7 +1290,7 @@ func stringToListOfCountsWithTotal(s, nameKey string) (*orderedmap.OrderedMap, e
 }
 
 // eg Dampier (iron ore), Dalrymple Bay (coal), Hay Point (coal)
-func stringToListWithItemNotes(s, itemKey, noteKey string) ([]*orderedmap.OrderedMap, error) {
+func stringToListWithItemNotes(s, itemKey, noteKey string, noteMayBeNumber bool) ([]*orderedmap.OrderedMap, error) {
 	o := []*orderedmap.OrderedMap{}
 	bits := strings.Split(s, ", ")
 	for _, bit := range bits {
@@ -1311,7 +1311,7 @@ func stringToListWithItemNotes(s, itemKey, noteKey string) ([]*orderedmap.Ordere
 		if len(note) > 0 {
 			// try converting to number if possible
 			noteNum, err := stringToNumber(note)
-			if err == nil {
+			if err == nil && noteMayBeNumber {
 				item.Set(noteKey, noteNum)
 			} else {
 				item.Set(noteKey, note)

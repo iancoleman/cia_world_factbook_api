@@ -3230,12 +3230,12 @@ func portsAndTerminals(value string) (interface{}, error) {
 				o.Set(key, l)
 			}
 		} else if key == "dry_bulk_cargo_ports" {
-			m, err := stringToListWithItemNotes(v, "place", "type")
+			m, err := stringToListWithItemNotes(v, "place", "type", false)
 			if err == nil {
 				o.Set(key, m)
 			}
 		} else if key == "container_ports" {
-			m, err := stringToListWithItemNotes(v, "place", "twenty_foot_equivalent_units")
+			m, err := stringToListWithItemNotes(v, "place", "twenty_foot_equivalent_units", true)
 			if err == nil {
 				o.Set(key, m)
 			}
@@ -3392,6 +3392,15 @@ func refugees(value string) (interface{}, error) {
 	value = strings.Replace(value, " (country of origin)", "", -1)
 	value = strings.Replace(value, "IDPs", "internally_displaced_persons", -1)
 	value = strings.Replace(value, ");", "),", -1)
+	value = strings.Replace(value, string(rune(160)), " ", -1) // nbsp
+	value = strings.Replace(value, "more than ", "", -1) // Algeria
+	value = strings.Replace(value, ", mostly living", ") (mostly living", -1) // Algeria
+	value = strings.Replace(value, "claimed asylum,", "claimed asylumCOMMA", -1) // Algeria
+	value = strings.Replace(value, "recognized as refugees,", "recognized as refugeesCOMMA", -1) // Algeria
+	value = strings.Replace(value, "political crisis;", "political crisisSEMICOLON", -1) // Argentina
+	// TODO consider the next two, this format maybe needs separate processing?
+	value = strings.Replace(value, "2.5-3.0 (1 million registered, 1.5-2.0 million undocumented) (Afghanistan)", "2,750,000 (Afghanistan) (1 million registeredCOMMA 1.5-2.0 million undocumented)", -1) // Iran
+	value = strings.Replace(value, "2.58-2.68 million (1.4 million registered, 1.18-1.28 million undocumented) (Afghanistan)", "2,630,000 (Afghanistan) (1.4 million registeredCOMMA 1.18-1.28 million undocumented)", -1) // Pakistan
 	o, err := stringToMap(value)
 	if err != nil {
 		return o, err
@@ -3401,12 +3410,30 @@ func refugees(value string) (interface{}, error) {
 		vInterface, _ := o.Get(key)
 		v := vInterface.(string)
 		if key == "refugees" {
-			byCountry, err := stringToListWithItemNotes(v, "people", "country_of_origin")
+			v, date, hasDate := stringWithoutDate(v)
+			byCountry, err := stringToListWithItemNotes(v, "people", "country_of_origin", false)
 			if err != nil {
 				continue
 			}
+			for i, _ := range byCountry {
+				countryInterface, hasCountry := byCountry[i].Get("country_of_origin")
+				if hasCountry {
+					country := countryInterface.(string)
+					bits := strings.Split(country, "; ")
+					if len(bits) == 2 {
+						byCountry[i].Set("country_of_origin", bits[0])
+						note := bits[1]
+						note = strings.Replace(note, "COMMA", ",", -1)
+						note = strings.Replace(note, "SEMICOLON", ";", -1)
+						byCountry[i].Set("note", note)
+					}
+				}
+			}
 			m := orderedmap.New()
 			m.Set("by_country", byCountry)
+			if hasDate {
+				m.Set("date", date)
+			}
 			o.Set(key, m)
 		} else if key == "internally_displaced_persons" {
 			m := orderedmap.New()
