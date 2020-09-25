@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-const VERSION = "0.0.3-beta"
+const VERSION = "0.0.4-beta"
 
 var NoValueErr = errors.New("No value")
 
