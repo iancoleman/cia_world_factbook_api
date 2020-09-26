@@ -3398,9 +3398,10 @@ func refugees(value string) (interface{}, error) {
 	value = strings.Replace(value, "claimed asylum,", "claimed asylumCOMMA", -1) // Algeria
 	value = strings.Replace(value, "recognized as refugees,", "recognized as refugeesCOMMA", -1) // Algeria
 	value = strings.Replace(value, "political crisis;", "political crisisSEMICOLON", -1) // Argentina
-	// TODO consider the next two, this format maybe needs separate processing?
-	value = strings.Replace(value, "2.5-3.0 (1 million registered, 1.5-2.0 million undocumented) (Afghanistan)", "2,750,000 (Afghanistan) (1 million registeredCOMMA 1.5-2.0 million undocumented)", -1) // Iran
-	value = strings.Replace(value, "2.58-2.68 million (1.4 million registered, 1.18-1.28 million undocumented) (Afghanistan)", "2,630,000 (Afghanistan) (1.4 million registeredCOMMA 1.18-1.28 million undocumented)", -1) // Pakistan
+	// handle very different format for Iran and Pakistan
+	if strings.Index(value, "undocumented)") > -1 {
+		return refugees2(value)
+	}
 	o, err := stringToMap(value)
 	if err != nil {
 		return o, err
@@ -3434,6 +3435,121 @@ func refugees(value string) (interface{}, error) {
 			if hasDate {
 				m.Set("date", date)
 			}
+			o.Set(key, m)
+		} else if key == "internally_displaced_persons" {
+			m := orderedmap.New()
+			v, date, hasDate := stringWithoutDate(v)
+			v, ps := removeParenthesis(v)
+			v = strings.TrimSpace(v)
+			vNum, err := stringToNumber(v)
+			if err == nil {
+				m.Set("people", vNum)
+			} else {
+				ps = append([]string{v}, ps...)
+			}
+			if len(ps) > 0 {
+				note := strings.Join(ps, "; ")
+				m.Set("note", note)
+			}
+			if hasDate {
+				m.Set("date", date)
+			}
+			o.Set(key, m)
+		} else if key == "stateless_persons" {
+			m := orderedmap.New()
+			v, date, hasDate := stringWithoutDate(v)
+			vNum, err := stringToNumber(v)
+			if err == nil {
+				m.Set("people", vNum)
+			} else {
+				m.Set("note", v)
+			}
+			if hasDate {
+				m.Set("date", date)
+			}
+			o.Set(key, m)
+		}
+	}
+	if len(keys) == 0 {
+		return o, NoValueErr
+	}
+	return o, nil
+}
+
+func refugees2(value string) (interface{}, error) {
+	// format is
+	// 2.5-3.0 (1 million registered, 1.5-2.0 million undocumented) (Afghanistan) (2017)
+	// want to convert to
+	// 2,750,000 (Afghanistan) (1 million registeredCOMMA 1.5-2.0 million undocumented) (2017)
+	o, err := stringToMap(value)
+	if err != nil {
+		return o, err
+	}
+	keys := o.Keys()
+	for _, key := range keys {
+		vInterface, _ := o.Get(key)
+		v := vInterface.(string)
+		if key == "refugees" {
+			byCountry := []*orderedmap.OrderedMap{}
+			countries := strings.Split(v, "), ")
+			for i, refugeesByCountry := range countries {
+				if i < len(countries) - 1 {
+					refugeesByCountry = refugeesByCountry + ")"
+				}
+				refugees, date, hasDate := stringWithoutDate(refugeesByCountry)
+				peopleStr, ps := removeParenthesis(refugees)
+				people, err := stringToNumber(peopleStr)
+				if err != nil {
+					return o, err
+				}
+				bits := strings.Split(peopleStr, "-")
+				isRange := len(bits) == 2
+				if isRange {
+					lowerStr := bits[0]
+					upperStr := bits[1]
+					// check for units
+					upperBits := strings.Fields(upperStr)
+					if len(upperBits) == 2 {
+						upperUnits := upperBits[1]
+						lowerStr = lowerStr + " " + upperUnits
+					}
+					// parse upper and lower bounds
+					lower, err := stringToNumber(lowerStr)
+					if err != nil {
+						return o, err
+					}
+					upper, err := stringToNumber(upperStr)
+					if err != nil {
+						return o, err
+					}
+					// use average of upper and lower bounds
+					people = (lower + upper) / 2
+					if people < 1000 && strings.Index(v, "million") > 0 {
+						people = people * 1000000
+					}
+				}
+				country := ""
+				note := ""
+				if len(ps) == 1 {
+					country = ps[0]
+				}
+				if len(ps) == 2 {
+					note = ps[0]
+					country = ps[1]
+				}
+				item := orderedmap.New()
+				item.Set("people", people)
+				item.Set("country_of_origin", country)
+				if len(note) > 0 {
+					item.Set("note", note)
+				}
+				if hasDate {
+					item.Set("date", date)
+				}
+				byCountry = append(byCountry, item)
+			}
+			m := orderedmap.New()
+			m.Set("by_country", byCountry)
 			o.Set(key, m)
 		} else if key == "internally_displaced_persons" {
 			m := orderedmap.New()
