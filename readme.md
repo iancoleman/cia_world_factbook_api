@@ -5,8 +5,8 @@ Converts the [CIA World Factbook](https://www.cia.gov/library/publications/the-w
 ## Data
 
 * [Latest](https://www.github.com/iancoleman/cia_world_factbook_api/tree/master/data) - approx 3 MB - updated monthly
-* [Historical](https://mega.nz/file/gY1AxQ7T#D4zAqZd6WMcPMewkcN9Aw2HyQCvH83wJ4Yd3sywQ7gE) - approx 40 MB - last updated 2020-05-09
-* [Html Archives](https://mega.nz/file/wdsGgaaD#UueWdM36sv-W-jdSxegvNA_y28xdVOCdfekYyTFpkCw) - approx 350 MB - last updated 2020-05-09
+* [Historical](https://mega.nz/file/JV9wDQgA#bm2jB0TTU9Y6uLnJJOCw8kIaZcKj1_HbqqXwlRdtV40) - approx 40 MB - last updated 2020-09-27
+* [Html Archives](https://mega.nz/file/Nc8y1Q7Y#Yf7Oe4-wqBq24w0KiEd4qDLgkeN46OF5VaXL_TxHEEg) - approx 400 MB - last updated 2020-09-27
 
 ## Usage
 
